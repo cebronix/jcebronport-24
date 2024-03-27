@@ -1,0 +1,6 @@
+name: 'Balance Portfolio'
+type: module
+description: 'A module to manage the balance portfolio.'
+core_version_requirement: ^9 || ^10
+package: Custom
+version: '1.0'

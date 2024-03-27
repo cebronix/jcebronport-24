@@ -1,0 +1,7 @@
+balance_portfolio.balance:
+  path: '/work'
+  defaults:
+    _controller: '\Drupal\balance_portfolio\Controller\BalancePortfolioController::buildWorkDeck'
+    _title: 'Play the game'
+  requirements:
+    _permission: 'access content'

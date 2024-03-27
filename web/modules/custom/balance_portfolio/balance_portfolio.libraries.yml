@@ -1,0 +1,10 @@
+balance_portfolio:
+  version: 1.x
+  js:
+    /modules/custom/balance_portfolio/balance/dist/app.js: {}
+    /modules/custom/balance_portfolio/balance/dist/chunk-vendors.js: {}
+  dependencies:
+    - core/drupalSettings
+  css:
+    theme:
+      /modules/custom/balance_portfolio/balance/dist/app.css: {}
