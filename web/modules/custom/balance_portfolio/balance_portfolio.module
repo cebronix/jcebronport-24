@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function balance_portfolio_theme() {
+  return [
+    'balance_portfolio' => [
+      'template' => 'portfolio',
+      'variables' => [],
+    ],
+  ];
+}

@@ -1,0 +1,22 @@
+name: heroic
+type: theme
+'base theme': stable9
+starterkit: true
+version: VERSION
+libraries:
+  - heroic/base
+  - heroic/messages
+  - core/normalize
+libraries-extend:
+  user/drupal.user:
+    - heroic/user
+  core/drupal.dropbutton:
+    - heroic/dropbutton
+  core/drupal.dialog:
+    - heroic/dialog
+  file/drupal.file:
+    - heroic/file
+  core/drupal.progress:
+    - heroic/progress
+core_version_requirement: ^10
+generator: 'starterkit_theme:10.1.5'

@@ -1,0 +1,22 @@
+{
+  "name": "heroic",
+  "version": "1.0.0",
+  "description": "Heroic Drupal theme designed for creators",
+  "main": "index.js",
+  "scripts": {
+    "build": "your-build-command",
+    "watch": "your-watch-command"
+  },
+  "keywords": [
+    "drupal",
+    "theme"
+  ],
+  "author": "J. Cebron Cook",
+  "license": "MIT",
+  "dependencies": {
+    "your-dependency": "version"
+  },
+  "devDependencies": {
+    "your-dev-dependency": "version"
+  }
+}

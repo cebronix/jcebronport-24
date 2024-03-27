@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function comic_panelizer_menu() {
+  $items = [];
+
+  $items['comic_panelizer/upload'] = array(
+    'title' => 'Upload Comic Page',
+    'page callback' => 'Drupal\comic_panelizer\Controller\ComicPanelizerController::uploadPage',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+cd web/themes/custom/balance
+npm install
+gulp
+
+# Compile the compare models module
+cd ../../../modules/custom/balance_portfolio/balance
+npm install
+npm run build
+
+drush cr

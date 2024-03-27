@@ -1,0 +1,22 @@
+name: balance
+type: theme
+'base theme': stable9
+starterkit: true
+version: VERSION
+libraries:
+  - balance/base
+  - balance/messages
+  - core/normalize
+libraries-extend:
+  user/drupal.user:
+    - balance/user
+  core/drupal.dropbutton:
+    - balance/dropbutton
+  core/drupal.dialog:
+    - balance/dialog
+  file/drupal.file:
+    - balance/file
+  core/drupal.progress:
+    - balance/progress
+core_version_requirement: ^10
+generator: 'starterkit_theme:10.2.3'
