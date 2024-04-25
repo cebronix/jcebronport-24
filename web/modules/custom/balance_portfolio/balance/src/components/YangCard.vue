@@ -1,0 +1,121 @@
+<template>
+  <div  class="card flipped yang-card">
+    <div class="card-header">
+      <div class="value">
+        19
+      </div>
+      <h3>{{ props.card.title }}</h3>
+    </div>
+    <div class="type">
+      X
+    </div>
+    <div class="content">
+      <!-- <span v-html="props.card.problem"></span> -->
+      <img :src="`/sites/default/files/${props.card.preview_image}`" />
+    </div>
+    <div class="card-footer">
+      <div class="subtitle">
+        <span v-html="props.card.subtitle"></span>
+      </div>
+      <div class="something">
+        20
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+
+import { defineProps, onMounted } from 'vue';
+
+const props = defineProps({
+  card: Object
+})
+
+onMounted(() => {
+  // console.log(props.card);
+})
+
+</script>
+
+<style scoped lang="scss">
+  .yang-card {
+    background: url('../assets/yang-card-bg.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    padding: 12px;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .card-header {
+      display: flex;
+      width: 100%;
+
+      .value {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #92B865;
+        border: solid 4px #fff;
+        border-radius: 50%;
+        font-size: 2rem;
+        height: 50px;
+        width: 50px;
+        margin-bottom: 5px;
+      }
+
+      h3 {
+        flex-basis: 60%;
+        font-size: 1.2rem;
+        margin: 10px 0;
+        padding-left: 1rem;
+      }
+    }
+
+    .type {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #2E4F72;
+      border: solid 2px #fff;
+      border-radius: 50%;
+      height: 25px;
+      width: 25px;
+      z-index: 1;
+    }
+
+    .content {
+      margin-top: -20px;
+      padding: 0 8px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+
+      .subtitle {
+        flex-basis: 60%;
+        margin-right: 1rem;
+        text-align: right;
+      }
+
+      .something {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #2B90AE;
+        border: solid 4px #fff;
+        border-radius: 50%;
+        font-size: 2rem;
+        height: 50px;
+        width: 50px;
+      }
+    }
+  }
+</style>

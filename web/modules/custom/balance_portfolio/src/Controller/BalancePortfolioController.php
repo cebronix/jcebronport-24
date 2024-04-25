@@ -13,7 +13,8 @@ class BalancePortfolioController extends ControllerBase {
    */
   public function buildWorkDeck() {
     $build = [];
-    $build['#attached']['drupalSettings']['deckData'] = json_encode($this->getDeckData()[0]);
+    $build['#attached']['drupalSettings']['gameDeck'] = $this->getGameDeck();
+    $build['#attached']['drupalSettings']['aboutDeck'] = $this->getAboutDeck();
     $build['#theme'] = 'balance_portfolio';
 
     return $build;
@@ -22,11 +23,10 @@ class BalancePortfolioController extends ControllerBase {
   /**
    * Return deck.
    */
-  public function getDeckData() {
+  public function getGameDeck() {
     $route_name = \Drupal::routeMatch()->getRouteName();
     if ($route_name == 'balance_portfolio.balance') {
       $data = [];
-      // Get all nodes of the bundle 'project'.
       $projects = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['type' => 'project']);
       foreach ($projects as $project) {
         $data[] = [
@@ -36,8 +36,8 @@ class BalancePortfolioController extends ControllerBase {
           'category' => $this->getCategories($project->get('field_project_category')->referencedEntities()),
           'duration' => $project->get('field_project_duration')?->value,
           'product' => $project->get('field_product')?->value,
-          'hero' => $project->get('field_hero')->entity?->get('field_media_image')->entity?->getFileUri(),
-          'preview_image' => $project->get('field_preview_image')->entity?->get('field_media_image')->entity?->getFileUri(),
+          'hero' => str_replace('public:/', '', $project->get('field_hero')->entity?->get('field_media_image')->entity?->getFileUri() ?? ''),
+          'preview_image' => str_replace('public:/', '', $project->get('field_preview_image')->entity?->get('field_media_image')->entity?->getFileUri() ?? ''),
           'problem' => $project->get('field_the_problem')?->value,
           'goal' => $project->get('field_the_goal')?->value,
           'my_role' => $project->get('field_my_role')?->value,
@@ -48,16 +48,68 @@ class BalancePortfolioController extends ControllerBase {
           'usability_study_findings' => $this->getUsabilityStudyFindings($project->get('field_usability_study_findings')->referencedEntities()),
           'personas' => $this->getPersonas($project->get('field_personas')->referencedEntities()),
           'journey_map_intro' => $project->get('field_journey_map_intro')?->value,
-          'journey_map_preview' => $project->get('field_journey_map_preview')->entity?->get('field_media_image')->entity?->getFileUri(),
-          'journey_map_pdf' => $project->get('field_journey_map_pdf')->entity?->get('field_media_document')->entity?->getFileUri(),
+          'journey_map_preview' => str_replace('public:/', '', $project->get('field_journey_map_preview')->entity?->get('field_media_image')->entity?->getFileUri() ?? ''),
+          'journey_map_pdf' => str_replace('public:/', '', $project->get('field_journey_map_pdf')->entity?->get('field_media_document')->entity?->getFileUri() ?? ''),
           'wireframes_prototypes' => $this->getWireframesPrototypes($project->get('field_wireframes_and_prototypes')->referencedEntities()),
           'desing_system_intro' => $project->get('field_desing_system_intro')?->value,
-          'design_system_image' => $project->get('field_design_system_image')->entity?->get('field_media_image')->entity?->getFileUri(),
+          'design_system_image' => str_replace('public:/', '', $project->get('field_design_system_image')->entity?->get('field_media_image')->entity?->getFileUri() ?? ''),
           'accessibility_intro' => $project->get('field_accessibility_intro')?->value,
           'acc_considerations' => $this->getAccConsiderations($project->get('field_acc_considerations')->referencedEntities()),
           'impact' => $project->get('field_impact')?->value,
           'what_i_learned' => $project->get('field_what_i_learned')?->value,
         ];
+      }
+      return $data;
+    }
+  }
+
+  /**
+   * Return the about deck.
+   */
+  public function getAboutDeck() {
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name == 'balance_portfolio.balance') {
+      $data = [];
+      $cards = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['type' => 'about_card']);
+      foreach ($cards as $card) {
+        $category = $this->getTaxonomy($card->get('field_about_card_type')->referencedEntities());
+        switch ($category) {
+          case 'Certificates and Awards':
+            $data[] = [
+              'category' => $category,
+              'certs_awards' => $card->get('field_certificates_and_awards')?->value,
+            ];
+            break;
+          case 'Education':
+            $data[] = [
+              'category' => $category,
+              'education' => $card->get('field_about_education')?->value,
+            ];
+            break;
+          case 'Leveled Data':
+            $data[] = [
+              'category' => $category,
+              'leveled_data' => $this->getLeveledData($card->get('field_leveled_data')->referencedEntities()),
+            ];
+            break;
+          case 'Plain Text':
+            $data[] = [
+              'category' => $category,
+              'body' => $card->get('field_about_card_body')?->value,
+            ];
+            break;
+          case 'Work Experience':
+            $data[] = [
+              'category' => $category,
+              'work_experience' => $this->getWorkExperience($card->get('field_work_experience')->referencedEntities()),
+            ];
+            break;
+          default:
+            $data[] = [
+              'category' => $category,
+            ];
+            break;
+        }
       }
       return $data;
     }
@@ -73,6 +125,21 @@ class BalancePortfolioController extends ControllerBase {
         'id' => $category->get('tid')?->value,
         'name' => $category->get('name')?->value,
       ];
+    }
+    return $data;
+  }
+
+  /**
+   * Return a single Taxonomy.
+   */
+  public function getTaxonomy($taxonomies) {
+    $data = '';
+    foreach ($taxonomies as $taxonomy) {
+      $data = $taxonomy->get('name')?->value;
+      // $data = [
+      //   'id' => $taxonomy->get('tid')?->value,
+      //   'name' => $taxonomy->get('name')?->value,
+      // ];
     }
     return $data;
   }
@@ -129,7 +196,7 @@ class BalancePortfolioController extends ControllerBase {
         'hometown' => $persona->get('field_hometown')[0]?->value,
         'education' => $persona->get('field_persona_education')[0]?->value,
         'family' => $persona->get('field_persona_family')[0]?->value,
-        'photo' => $persona->get('field_persona_photo')->entity?->get('field_media_image')->entity?->getFileUri(),
+        'photo' => str_replace('public:/', '', $persona->get('field_persona_photo')->entity?->get('field_media_image')->entity?->getFileUri() ?? ''),
       ];
     }
     return $data;
@@ -144,7 +211,7 @@ class BalancePortfolioController extends ControllerBase {
       $images = $wireframePrototype->get('field_wire_proto_images');
       $imagePaths = [];
       foreach ($images as $image) {
-        $imagePath = $image->entity->get('field_media_image')?->entity->getFileUri();
+        $imagePath = str_replace('public:/', '', $image->entity->get('field_media_image')?->entity->getFileUri() ?? '');
         $imagePaths[] = $imagePath;
       }
       $data[] = [
@@ -174,4 +241,51 @@ class BalancePortfolioController extends ControllerBase {
     return $data;
   }
 
+  /**
+   * Return the leveled data.
+   */
+  public function getLeveledData($leveledDataSet) {
+    $data = [];
+    foreach ($leveledDataSet as $leveledData) {
+      $data = [
+        'id' => $leveledData->get('id')->value,
+        'category' => $this->getTaxonomy($leveledData->get('field_category')->referencedEntities()),
+        'title' => $leveledData->get('field_leveled_data_name')[0]?->value,
+        'level' => $this->getTaxonomy($leveledData->get('field_leveled_category_level')->referencedEntities()),
+      ];
+    }
+    return $data;
+  }
+
+  /**
+   * Return the work experience.
+   */
+  public function getWorkExperience($workExperienceSet) {
+    $data = [];
+    foreach ($workExperienceSet as $workExperience) {
+      $data = [
+        'id' => $workExperience->get('id')->value,
+        'title' => $workExperience->get('field_work_exp_title')[0]?->value,
+        'duration' => $workExperience->get('field_work_exp_duration')[0]?->value,
+        'body' => $workExperience->get('field_work_exp_body')[0]?->value,
+        'division_work' => $this->getDivisionOfWork($workExperience->get('field_division_of_work')->referencedEntities()),
+      ];
+    }
+    return $data;
+  }
+
+  /**
+   * Return the division of work.
+   */
+  public function getDivisionOfWork($divisionOfWorkSet) {
+    $data = [];
+    foreach ($divisionOfWorkSet as $divisionOfWork) {
+      $data[] = [
+        'id' => $divisionOfWork->get('id')->value,
+        'category' => $this->getTaxonomy($divisionOfWork->get('field_division_of_work_category')->referencedEntities()),
+        'percentage' => $divisionOfWork->get('field_division_percentage')[0]?->value,
+      ];
+    }
+    return $data;
+  }
 }
