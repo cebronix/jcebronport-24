@@ -60,3 +60,6 @@
 /drush
 /drupal.phar
 /drupal
+
+web/modules/custom/*/*/dist
+web/modules/custom/*/*/node_modules
