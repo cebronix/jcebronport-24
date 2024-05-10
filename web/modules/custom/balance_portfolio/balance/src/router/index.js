@@ -17,8 +17,8 @@ const routes = [
     component: AboutMode
   },
   {
-    path: '/play',
-    name: 'play',
+    path: '/portfolio',
+    name: 'portfolio',
     component: GameMode
   },
   {
