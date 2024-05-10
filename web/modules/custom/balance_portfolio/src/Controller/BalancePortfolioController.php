@@ -59,6 +59,9 @@ class BalancePortfolioController extends ControllerBase {
           'what_i_learned' => $project->get('field_what_i_learned')?->value,
         ];
       }
+      // Shuffle the deck.
+      shuffle($data);
+
       return $data;
     }
   }

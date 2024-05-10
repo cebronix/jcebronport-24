@@ -1,6 +1,6 @@
 <template>
   <div class="playmat">
-    <div class="row opponent-hand">
+    <div class="row opponent-hand in-hand">
       <div v-for="card in gameDeck" :key="card.id" class="card-wrapper">
         <div class="card facedown"></div>
         <YinCard class="faceup" :card="card" />
@@ -9,7 +9,12 @@
     <div class="row">
       <div class="col draw-pile">
         <div class="card-slot">DRAW PILE</div>
-        <button>NEW GAME</button>
+        <div v-for="card in gameDeck" :key="card.id" class="stack card-wrapper">
+          <div class="card facedown"></div>
+          <YinCard :card="card" />
+          <YangCard :card="card" />
+        </div>
+        <button>SHUFFLE</button>
       </div>
       <div class="col play-slots">
         <div class="row opponent-slots">
@@ -25,10 +30,10 @@
       </div>
       <div class="col discard-pile">
         <div class="card-slot">DISCARD</div>
-        <button>SHUFFLE</button>
+        <button>NEW GAME</button>
       </div>
     </div>
-    <div class="row player-hand">
+    <div class="row player-hand in-hand">
       <div v-for="card in gameDeck" :key="card.id"  class="card-wrapper">
         <YangCard :card="card" />
       </div>
@@ -44,7 +49,7 @@ import YangCard from '@/components/YangCard'
 const gameDeck = ref(window.drupalSettings.gameDeck)
 
 onMounted(() => {
-  console.log(gameDeck.value)
+  // console.log(gameDeck.value)
 })
 
 </script>
@@ -83,15 +88,23 @@ onMounted(() => {
 
     .draw-pile,
     .discard-pile {
-      justify-content: center;
       align-items: center;
       color: rgba(255, 255, 255, 0.75);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      justify-content: center;
 
       .card-slot {
+        border: solid 5px #fff;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 1.4rem;
+      }
+
+      .yin-card,
+      .yang-card {
+        display: none;
       }
     }
 
@@ -111,33 +124,115 @@ onMounted(() => {
       }
     }
 
+    .stack {
+      position: absolute;
+      rotate: unset;
+      transform: translate(-15px, -38px);
+
+      .card {
+        z-index: unset;
+      }
+
+      &:nth-child(4) {
+        .card {
+          transform: translate(4px, 4px);
+        }
+      }
+        
+      &:nth-child(3) {
+        .card {
+          transform: translate(8px, 8px);
+        }
+      }
+
+      &:nth-child(2) {
+        .card {
+          transform: translate(12px, 12px);
+        }
+      }
+    }
+
     button {
+      background-color: #2B90AE;
+      border: 0;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
       margin: 1rem 0 0;
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        background-color: #2E4F72;
+      }
+    }
+  }
+
+  .in-hand {
+    .card-wrapper {
+      display: flex;
+      transition: all 0.325s ease-in-out;
+  
+      &:first-of-type {
+        margin-top: 40px;
+        rotate: -10deg;
+        transform: translateX(120px);
+        z-index: 0;
+      }
+  
+      &:nth-child(2) {
+        margin-top: 0px;
+        rotate: -5deg;
+        transform: translateX(60px);
+        z-index: 1;
+      }
+  
+      &:nth-child(3) {
+        margin-top: -20px;
+        z-index: 2;
+      }
+  
+      &:nth-child(4) {
+        margin-top: 0px;
+        rotate: 5deg;
+        transform: translateX(-60px);
+        z-index: 3;
+      }
+  
+      &:last-of-type {
+        margin-top: 40px;
+        rotate: 10deg;
+        transform: translateX(-120px);
+        z-index: 4;
+      }
     }
   }
 
   // Hands
   .opponent-hand {
     justify-content: center;
-    margin-top: -60px;
+    margin-top: -120px;
     scale: -80%;
 
     .faceup {
       display: none;
     }
+    
+    .card-wrapper .card {
+      width: 140px;
+    }
   }
 
   .player-hand {
     justify-content: center;
-    margin-bottom: -20px;
+    margin-top: 20px;
     position: relative;
 
     .card-wrapper {
       &:hover {
         cursor: pointer;
-        margin-top: -160px;
+        margin-top: -140px;
         rotate: unset;
-        scale: 115%;
+        scale: 110%;
         z-index: 5;
       }
 
@@ -147,19 +242,6 @@ onMounted(() => {
         width: 200px;
         height: 305px;
       }
-    }
-  }
-
-  .card-wrapper {
-    display: flex;
-    transition: scale 0.4s ease-in-out;
-
-    &:first-of-type {
-      rotate: -10deg;
-    }
-
-    &:last-of-type {
-      rotate: 10deg;
     }
   }
 
