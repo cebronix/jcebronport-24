@@ -1,7 +1,7 @@
 <template>
   <div class="card-wrapper">
     <div class="splash-card">
-      <div class="splash-img" :class=props.card.image></div>
+      <div class="splash-img" :class=props.card.image ></div>
       <h3>{{ props.card.content }}</h3>
     </div>
     <div class="facedown"></div>
@@ -31,7 +31,8 @@ onMounted(() => {
     transition: all 0.75s ease;
 
     &:hover {
-      transform: perspective(400px) rotateY(180deg);
+      transform: perspective(400px) rotateY(180deg) !important;
+      z-index: 1;
     }
 
     .splash-card,

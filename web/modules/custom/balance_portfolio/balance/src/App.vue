@@ -68,7 +68,7 @@
 
   .portfolio {
     background: rgb(57,56,54);
-    background: linear-gradient(0deg, rgba(57,56,54,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,1) 64%, rgba(57,56,54,1) 100%);
+    background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,1) 64%, rgb(26, 26, 26) 100%);
     color: #fff;
     height: 100vh;
     overflow: hidden;
