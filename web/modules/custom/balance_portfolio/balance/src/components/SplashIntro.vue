@@ -1,7 +1,7 @@
 <template>
   <div class="intro">
     <div class="row">Hi! My name is <h1> Joseph Cook.</h1> </div>
-    <div class="row"> I'm a <h2> Software Engineer</h2> and <h2> UX Designer.</h2></div>
+    <div class="row"> I'm a <h2> Software Engineer</h2> and <h2> UX Designer???</h2></div>
     <div class="row">
       <h3>I like both.</h3>
     </div>
@@ -12,7 +12,7 @@
       <h4> Here's how that happened:</h4>
     </div>
   </div>
-  <div class="splash-deck">
+  <div class="splash-deck" ref="splash_deck">
     <SplashCard v-for="card in splashDeck" :card = "card" :key="card.id"/>
   </div>
   <div class="learn-more">
@@ -22,7 +22,27 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import SplashCard from '@/components/SplashCard'
+
+const splash_deck = ref(null)
+
+const dealCards = function() {
+  setTimeout(() => {
+    ref(splash_deck).value.classList.add('dealt')
+    const splashCards = ref(splash_deck).value.querySelectorAll('.card-wrapper')
+    splashCards.forEach((card) => {
+      card.style.transform = 'rotate(' + rotateRandom(35) + 'deg)'
+    })
+  }, 1500)
+}
+
+const rotateRandom = function(max) {
+  var min = -max
+  var adjustment = Math.floor(Math.random() * 25)
+  var degree = Math.floor(Math.random() * (max - min + adjustment)) + min
+  return degree
+}
 
 const splashDeck = [
   {
@@ -55,8 +75,12 @@ const splashDeck = [
   //   content: 'What\'s next? - UX Engineer? Full Stack Developer?',
   //   image: 'yin-card-bg.jpg'
   // }
-
 ]
+
+onMounted(() => {
+  dealCards()
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -80,7 +104,7 @@ const splashDeck = [
       width: 100%;
 
       &:nth-child(even) {
-        padding-left: 4rem;
+        padding-left: 3rem;
       }
 
       &:nth-child(3) {
@@ -130,7 +154,23 @@ const splashDeck = [
     flex-wrap: wrap;
     justify-content: center;
     margin: 0 auto;
-    width: 85%;
+    transition: all 0.75s ease-in-out;
+    width: 30%;
+
+    .card-wrapper {
+      &:not(:first-of-type) {
+        margin-left: -170px;
+      }
+    }
+
+    &.dealt {
+      transition: all 0.75s ease-in-out;
+      width: 95%;
+
+      .card-wrapper {
+        margin-left: unset;
+      }
+    }
   }
 
   .learn-more {
@@ -139,7 +179,7 @@ const splashDeck = [
     width: 85%;
     justify-content: center;
     gap: 2rem;
-    padding-left: 4rem;
+    padding-left: 2rem;
   }
 
   .button {

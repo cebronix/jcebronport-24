@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@babel/eslint-plugin": "^7.23.5"
+  },
+  "dependencies": {
+    "vuedraggable": "^4.1.0"
+  }
+}

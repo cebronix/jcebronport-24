@@ -75,41 +75,46 @@ class BalancePortfolioController extends ControllerBase {
       $data = [];
       $cards = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['type' => 'about_card']);
       foreach ($cards as $card) {
-        $category = $this->getTaxonomy($card->get('field_about_card_type')->referencedEntities());
+        $category = $this->getTaxonomy($card->get('field_about_card_type')?->referencedEntities());
         switch ($category) {
           case 'Certificates and Awards':
-            $data[] = [
+            $data['edu_certs_random'][] = [
+              'main_title' => $card->getTitle(),
               'category' => $category,
-              'certs_awards' => $card->get('field_certificates_and_awards')?->value,
+              'certs_awards' => $card->get('field_certificates_and_awards')?->getValue(),
             ];
             break;
           case 'Education':
-            $data[] = [
+            $data['edu_certs_random'][] = [
+              'main_title' => $card->getTitle(),
               'category' => $category,
               'education' => $card->get('field_about_education')?->value,
             ];
             break;
-          case 'Leveled Data':
-            $data[] = [
-              'category' => $category,
-              'leveled_data' => $this->getLeveledData($card->get('field_leveled_data')->referencedEntities()),
-            ];
-            break;
           case 'Plain Text':
-            $data[] = [
+            $data['edu_certs_random'][] = [
+              'main_title' => $card->getTitle(),
               'category' => $category,
               'body' => $card->get('field_about_card_body')?->value,
             ];
             break;
-          case 'Work Experience':
-            $data[] = [
+          case 'Leveled Data':
+            $data[$category][] = [
+              'main_title' => $card->getTitle(),
               'category' => $category,
-              'work_experience' => $this->getWorkExperience($card->get('field_work_experience')->referencedEntities()),
+              'leveled_data' => $this->getLeveledData($card->get('field_leveled_data')?->referencedEntities()),
+            ];
+            break;
+          case 'Work Experience':
+            $data[$category][] = [
+              'main_title' => $card->getTitle(),
+              'category' => $category,
+              'work_experience' => $this->getWorkExperience($card->get('field_work_experience')?->referencedEntities()),
             ];
             break;
           default:
             $data[] = [
-              'category' => $category,
+              'main_title' => $card->getTitle(),
             ];
             break;
         }
@@ -139,10 +144,6 @@ class BalancePortfolioController extends ControllerBase {
     $data = '';
     foreach ($taxonomies as $taxonomy) {
       $data = $taxonomy->get('name')?->value;
-      // $data = [
-      //   'id' => $taxonomy->get('tid')?->value,
-      //   'name' => $taxonomy->get('name')?->value,
-      // ];
     }
     return $data;
   }
