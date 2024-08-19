@@ -24,19 +24,19 @@ const aboutDeck = ref(window.drupalSettings.aboutDeck)
 const dealCards = function() {
   setTimeout(() => {
     ref(about_mode).value.classList.add('dealt')
-    const aboutCards = ref(about_mode).value.querySelectorAll('.card-wrapper')
-    aboutCards.forEach((card) => {
-      card.style.transform = 'rotate(' + rotateRandom(35) + 'deg)'
-    })
+    // const aboutCards = ref(about_mode).value.querySelectorAll('.card-wrapper')
+    // aboutCards.forEach((card) => {
+    //   card.style.transform = 'rotate(' + rotateRandom(35) + 'deg)'
+    // })
   }, 1500)
 }
 
-const rotateRandom = function(max) {
-  var min = -max
-  var adjustment = Math.floor(Math.random() * 25)
-  var degree = Math.floor(Math.random() * (max - min + adjustment)) + min
-  return degree
-}
+// const rotateRandom = function(max) {
+//   var min = -max
+//   var adjustment = Math.floor(Math.random() * 25)
+//   var degree = Math.floor(Math.random() * (max - min + adjustment)) + min
+//   return degree
+// }
 
 onMounted(() => {
   // console.log(aboutDeck.value)
@@ -51,7 +51,7 @@ onMounted(() => {
   flex-wrap: wrap;
   justify-content: center;
   gap: 6rem;
-  margin-top: 4rem;
+  margin-top: 100px;
   transition: all 0.75s ease-in-out;
 
   &.dealt {
@@ -60,11 +60,11 @@ onMounted(() => {
 
     .about-cards {
       display: flex;
-      margin-left: unset;
+      margin-left: 0;
     }
 
     .card-wrapper:not(:first-of-type) {
-      margin-left: -45px;
+      margin-left: 0;
     }
   }
 }

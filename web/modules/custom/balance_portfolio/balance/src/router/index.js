@@ -1,8 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import SplashView from '@/views/SplashView'
 import AboutMode from '@/views/AboutMode'
-import GameMode from '@/views/GameMode'
+// import CollectionMode from '@/views/CollectionMode.vue'
+// import GameMode from '@/views/GameMode'
 import ContactView from '@/views/ContactView'
+import WorkView from '@/views/WorkView'
+import CaseStudy from '@/views/CaseStudy.vue'
 
 
 const routes = [
@@ -19,12 +22,27 @@ const routes = [
   {
     path: '/portfolio',
     name: 'portfolio',
-    component: GameMode
+    component: WorkView
+  },
+  // {
+  //   path: '/play',
+  //   name: 'play',
+  //   component: GameMode
+  // },
+  {
+    path: '/resume',
+    name: 'resume'
   },
   {
     path: '/contact',
     name: 'contact',
     component: ContactView
+  },
+  {
+    path: '/portfolio/case-study/:pid',
+    name: 'case-study',
+    component: CaseStudy,
+    props: true
   }
 ]
 

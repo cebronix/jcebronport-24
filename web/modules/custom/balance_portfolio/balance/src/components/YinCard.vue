@@ -12,6 +12,9 @@
     <div class="content">
       <span v-html="props.card.problem.slice(0, 200) + contentLength()"></span>
     </div>
+    <div class="hidden pid">
+      {{ props.card.pid }}
+    </div>
   </div>
 </template>
 

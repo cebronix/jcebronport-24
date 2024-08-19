@@ -1,25 +1,35 @@
 <template>
   <header>
-    <div class="branding">J. Cebron Cook</div>
+    <router-link :to="{ name: 'splash' }" class="branding">J. Cebron Cook</router-link>
     <nav>
-      <router-link :to="{ name: 'splash' }">Home</router-link>
+      <!-- <router-link :to="{ name: 'splash' }">Home</router-link> -->
       <router-link :to="{ name: 'about' }">About</router-link>
       <router-link :to="{ name: 'portfolio' }">Portfolio</router-link>
-      <!-- <router-link :to="{}">Resume</router-link> -->
+      <router-link :to="{ name: 'resume' }">Resume</router-link>
       <router-link :to="{ name: 'contact' }">Contact</router-link>
     </nav>
   </header>
   <router-view/>
 </template>
 
+<script setup>
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init();
+
+</script>
+
 <style scoped lang="scss">
+  @import url('../../../../../themes/custom/balance/dist/css/global.css');
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #000;
     margin: 0 auto;
-    position: relative;
+    position: fixed;
+    width: 100%;
     z-index: 1;
 
     .branding {
@@ -29,6 +39,7 @@
       font-size: 2rem;
       gap: 1rem;
       margin-left: 2rem;
+      text-decoration: none;
 
       &::before {
         content: '';
@@ -53,10 +64,12 @@
       color: #fff;
       font-family: "Oswald", sans-serif;
       font-weight: 400;
+      letter-spacing: 0.075rem;
       text-decoration: none;
       text-transform: uppercase;
 
-      &:hover {
+      &:hover,
+      &.router-link-active {
         color: #92B865;
       }
     }
@@ -67,11 +80,10 @@
   @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
   .portfolio {
-    background: rgb(57,56,54);
-    background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,1) 64%, rgb(26, 26, 26) 100%);
-    color: #fff;
-    height: 100vh;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden;
   }
 
   // $blue: #2E4F72;
