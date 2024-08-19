@@ -1,5 +1,5 @@
 balance_portfolio.balance:
-  path: '/work'
+  path: '/v1'
   defaults:
     _controller: '\Drupal\balance_portfolio\Controller\BalancePortfolioController::buildWorkDeck'
     _title: 'Portfolio'

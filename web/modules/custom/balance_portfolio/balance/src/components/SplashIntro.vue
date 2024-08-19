@@ -32,7 +32,7 @@ const dealCards = function() {
     ref(splash_deck).value.classList.add('dealt')
     const splashCards = ref(splash_deck).value.querySelectorAll('.card-wrapper')
     splashCards.forEach((card) => {
-      card.style.transform = 'rotate(' + rotateRandom(35) + 'deg)'
+      card.style.transform = 'rotate(' + rotateRandom(25) + 'deg)'
     })
   }, 1500)
 }
@@ -44,6 +44,7 @@ const rotateRandom = function(max) {
   return degree
 }
 
+// Move these to a config page.
 const splashDeck = [
   {
     id: 1,
@@ -168,7 +169,15 @@ onMounted(() => {
       width: 95%;
 
       .card-wrapper {
-        margin-left: unset;
+        margin-left: -10%;
+
+        @media screen and (min-width: 768px) {
+          margin-left: -5%;
+        }
+
+        @media screen and (min-width: 1084px) {
+          margin-left: unset;
+        }
       }
     }
   }

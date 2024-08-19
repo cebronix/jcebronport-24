@@ -13,13 +13,13 @@
     <div class="row">
       <div class="col draw-pile">
         <div class="card-slot">DRAW PILE</div>
-          <div v-for="card in gameDeck" :key="card.id" class="stack card-wrapper">
-            <div class="card facedown opp"></div>
-            <div class="card facedown player"></div>
-            <YinCard :card="card" />
-            <YangCard :card="card" />
-          </div>
-        <button v-on:click="dealCards()" :disabled="drawPileEmpty">DEAL</button>
+        <div v-for="card in gameDeck" :key="card.id" class="stack card-wrapper">
+          <div class="card facedown opp"></div>
+          <div class="card facedown player"></div>
+          <YinCard :card="card" />
+          <YangCard :card="card" />
+        </div>
+        <button v-on:click="dealCards()" :disabled="dealt">DEAL</button>
       </div>
       <div class="col play-slots">
         <div class="row opponent-slots">
@@ -39,14 +39,22 @@
           </div>
         </div>
       </div>
+      <div class="starburst"></div>
+      <div class="fail"></div>
       <div class="col discard-pile">
         <div class="card-slot">DISCARD</div>
-        <button v-on:click="newGame()" :disabled="!drawPileEmpty">NEW GAME</button>
+        <div v-for="card in discardPile" :key="card.id" class="stack card-wrapper">
+          <div class="card facedown"></div>
+        </div>
+        <button v-on:click="newGame()" :disabled="!dealt">NEW GAME</button>
       </div>
     </div>
     <div class="row controls-bottom">
       <div class="left">HELP</div>
-      <div class="right">???</div>
+      <div class="right">
+        <div class="modifier">- {{ modifier }}</div>
+        <div class="health">{{ health }}</div>
+      </div>
     </div>
     <div class="row player-hand in-hand">
       <div
@@ -61,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import YinCard from '@/components/YinCard'
 import YangCard from '@/components/YangCard'
 
@@ -69,13 +77,15 @@ let gameDeck = ref(window.drupalSettings.gameDeck)
 let playerHand = ref([])
 let opponentHand = ref([])
 let dealt = ref(false)
-let drawPileEmpty = computed(() => gameDeck.value.length === 0)
+let discardPile = ref([])
 let cardSelected = ref(false)
+let health = ref(1000)
+let modifier = ref(0)
 
 const dealCards = () => {
   if (dealt.value) return
 
-  let i = playerHand.value.length;
+  let i = playerHand.value.length
   let deck = document.querySelectorAll('.stack')
   const r_deck = Array.from(deck).reverse()
   animateDeal(i, r_deck)
@@ -119,6 +129,18 @@ const animateDeal = (i, deck) => {
   })
 }
 
+const opponentStarts = () => {
+  // Play a random card from the opponents hand to an opponent slot.
+  let randomCard = Math.floor(Math.random() * opponentHand.value.length)
+  let randomSlot = Math.floor(Math.random() * 3) + 1
+  let opponentCard = document.querySelector(`.opponent-hand .card-wrapper:nth-child(${randomCard}) .yin-card`)
+  let slot = document.querySelector(`.opponent-slot-${randomSlot}`)
+  // move the card object to the slot
+  slot.appendChild(opponentCard).classList.add('in-play')
+  opponentHand.value.splice(randomCard, 1)
+
+}
+
 const makeSlotsSelectable = (e) => {
   cardSelected.value = !cardSelected.value
   const card = e.currentTarget
@@ -139,22 +161,89 @@ const makeSlotsSelectable = (e) => {
 }
 
 const playCard = (card, slot) => {
-  console.log(card, slot)
-  // Move the selected card to the selected slot.
+  let playerSlot = document.querySelector(`.player-slot-${slot}`)
+  const slots = document.querySelectorAll('.slot-select')
+  slots.forEach(slot => slot.classList.remove('selectable'))
+  card.classList.remove('stickit')
+  playerSlot.appendChild(card).classList.add('in-play')
+
+  const oppCard = document.querySelector('.opponent-slots').querySelector('.in-play')
+  const oppSlot = oppCard.parentElement.classList[1].split('-')[2]
+  const playerPid = parseInt(card.querySelector('.pid').innerText)
+  const oppPid = parseInt(oppCard.querySelector('.pid').innerText)
+
+  if (oppSlot === slot && oppPid === playerPid) {
+    battle(card.querySelector('.card').querySelector('.type').innerText, oppCard.querySelector('.type').innerText)
+  } else {
+    fail(card, playerSlot)
+  }
+}
+
+const battle = (cardType, oppCardType) => {
+  const starburst = document.querySelector('.starburst')
+  starburst.classList.add('reaction')
+
+  starburst.addEventListener('animationend', () => {
+    starburst.classList.remove('reaction')
+    battleAnimation(cardType, oppCardType)
+  })
+}
+
+const fail = (card, playerSlot) => {
+  const fail = document.querySelector('.fail')
+  fail.classList.add('reaction')
+  const value = parseInt(card.querySelector('.value').innerText)
+
+  fail.addEventListener('animationend', () => {
+    fail.classList.remove('reaction')
+    playerSlot.removeChild(card)
+    const playerHand = document.querySelector('.player-hand')
+    card.classList.remove('in-play')
+    playerHand.appendChild(card)
+    loseHealth(value)
+  })
+}
+
+const loseHealth = (value) => {
+  const modifierWrapper = document.querySelector('.modifier')
+  modifierWrapper.classList.add('active')
+  modifier.value = value
+  health.value -= value
+  setTimeout(() => {
+    modifierWrapper.classList.remove('active')
+  }, 1500)
+}
+
+const battleAnimation = (cardType, oppCardType) => {
+  // Run animation based on card type and oppCardType
+  console.log(cardType, oppCardType)
+  // Discard both cards
+  // battle.addEventListener('animationend', () => {
+    discardBoth()
+  // })
+}
+
+const discardBoth = () => {
+  const playerSlot = document.querySelector('.player-slots').querySelector('.in-play')
+  const oppSlot = document.querySelector('.opponent-slots').querySelector('.in-play')
+  const discardSlot = document.querySelector('.discard-pile')
+  console.log(playerSlot, oppSlot, discardSlot)
+  discardPile.value.push(playerSlot)
+  discardPile.value.push(oppSlot)
+
+  setTimeout(() => {
+    openCaseStudy()
+  }, 1000)
+
+  // Remove cards from play
+  playerSlot.remove()
+  oppSlot.remove()
 
 }
 
-const opponentStarts = () => {
-  // Play a random card from the opponents hand to an opponent slot.
-  let randomCard = Math.floor(Math.random() * opponentHand.value.length)
-  let randomSlot = Math.floor(Math.random() * 3) + 1
-  let opponentCard = document.querySelector(`.opponent-hand .card-wrapper:nth-child(${randomCard}) .yin-card`)
-  let slot = document.querySelector(`.opponent-slot-${randomSlot}`)
-  console.log(opponentCard, slot)
-  // move the card object to the slot
-  slot.appendChild(opponentCard).classList.add('in-play')
-  opponentHand.value.splice(randomCard, 1)
-
+const openCaseStudy = () => {
+  // Open Case Study Modal/Component
+  console.log('Open Case Study')
 }
 
 onMounted(() => {
@@ -167,7 +256,7 @@ onUnmounted(() => {
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .playmat {
     display: flex;
     flex-wrap: wrap;
@@ -184,17 +273,21 @@ onUnmounted(() => {
     .controls {
       &-top {
         justify-content: space-between;
-        padding: 1rem 5rem 0;
+        padding: 1rem 2rem 0;
         position: absolute;
-        width: 86%;
+        width: 94%;
       }
 
       &-bottom {
         justify-content: space-between;
-        padding: 0 5rem 1rem;
+        padding: 0 2rem 1rem;
         position: absolute;
         bottom: 0;
-        width: 86%;
+        width: 94%;
+
+        .right {
+          text-align: center;
+        }
       }
     }
 
@@ -259,6 +352,17 @@ onUnmounted(() => {
           opacity: 1;
         }
       }
+
+      .card-wrapper.in-play {
+        position: relative;
+        top: -20px;
+        left: -10px;
+        scale: 82%;
+
+        .card {
+          height: 240px;
+        }
+      }
     }
 
     .card-slot {
@@ -312,6 +416,27 @@ onUnmounted(() => {
       &:hover {
         background-color: #2E4F72;
       }
+
+      &:disabled {
+        background-color: #666;
+        cursor: not-allowed;
+      }
+    }
+
+    .modifier {
+      color: #880000;
+      font-size: 2.5rem;
+      font-weight: 700;
+      opacity: 0;
+      transition: all 0.325s ease-in-out;
+      position: absolute;
+      bottom: 0;
+      right: 2%;
+
+      &.active {
+        bottom: 50px;
+        opacity: 1;
+      }
     }
   }
 
@@ -323,14 +448,14 @@ onUnmounted(() => {
       &:first-of-type {
         margin-top: 40px;
         rotate: -10deg;
-        transform: translateX(120px);
+        transform: translateX(160px);
         z-index: 0;
       }
   
       &:nth-child(2) {
         margin-top: 0px;
         rotate: -5deg;
-        transform: translateX(60px);
+        transform: translateX(80px);
         z-index: 1;
       }
   
@@ -342,14 +467,14 @@ onUnmounted(() => {
       &:nth-child(4) {
         margin-top: 0px;
         rotate: 5deg;
-        transform: translateX(-60px);
+        transform: translateX(-80px);
         z-index: 3;
       }
   
       &:last-of-type {
         margin-top: 40px;
         rotate: 10deg;
-        transform: translateX(-120px);
+        transform: translateX(-160px);
         z-index: 4;
       }
     }
@@ -436,6 +561,37 @@ onUnmounted(() => {
     }
   }
 
+  .starburst {
+    background: url('../assets/starburst.svg') no-repeat center center;
+    height: 850px;
+    width: 850px;
+    top: 8%;
+    left: 18%;
+  }
+
+  .fail {
+    background: url('../assets/fail.svg') no-repeat center center;
+    height: 750px;
+    width: 750px;
+    top: 12%;
+    left: 18%;
+  }
+
+  .fail,
+  .starburst {
+    background-size: contain;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.325s ease-in-out;
+    z-index: -1;
+
+    &.reaction {
+      animation: reaction 500ms ease-in-out;
+      opacity: 1;
+      z-index: 10;
+    }
+  }
+
   // All these numbers will need computed values.
   @keyframes dealup {
     0% {
@@ -452,6 +608,15 @@ onUnmounted(() => {
     }
     100% {
       transform: translate(450px, 390px) rotate(180deg);
+    }
+  }
+
+  @keyframes reaction {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
     }
   }
 

@@ -3,7 +3,7 @@ cd web/themes/custom/balance
 npm install
 gulp
 
-# Compile the compare models module
+# Compile the portfolio module
 cd ../../../modules/custom/balance_portfolio/balance
 npm install
 npm run build
