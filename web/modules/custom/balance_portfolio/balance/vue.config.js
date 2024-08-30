@@ -10,6 +10,11 @@ module.exports = defineConfig({
     extract: {
       filename: '[name].css',
       chunkFilename: '[name].css'
+    },
+    loaderOptions: {
+      sass: {
+        additionalData: `@import "/src/scss/variables.scss";`
+      }
     }
   }
 })

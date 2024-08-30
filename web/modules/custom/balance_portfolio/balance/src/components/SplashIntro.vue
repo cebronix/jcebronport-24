@@ -123,7 +123,7 @@ onMounted(() => {
   h2,
   h3,
   h4 {
-    color: #2B90AE;
+    color: $lt-blue;
     font-family: 'Rubik', sans-serif;
     font-weight: 400;
     margin: 0;
@@ -138,14 +138,14 @@ onMounted(() => {
   }
 
   h3 {
-    color: #92B865;
+    color: $green;
     font-family: 'Oswald', sans-serif;
     font-size: 2.5rem;
     text-transform: uppercase;
   }
 
   h4 {
-    color: #fff;
+    color: $white;
     font-family: 'Oswald', sans-serif;
     font-size: 2rem;
   }
@@ -192,10 +192,10 @@ onMounted(() => {
   }
 
   .button {
-    background-color: #2B90AE;
+    background-color: $lt-blue;
     border: 0;
     border-radius: 5px;
-    color: #fff;
+    color: $white;
     cursor: pointer;
     font-family: 'Oswald', sans-serif;
     font-weight: 400;
@@ -205,7 +205,7 @@ onMounted(() => {
     padding: 0.5rem 1rem;
 
     &:hover {
-      background-color: #2E4F72;
+      background-color: $blue;
     }
   }
 

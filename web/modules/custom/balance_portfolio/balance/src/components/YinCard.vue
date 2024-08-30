@@ -52,15 +52,15 @@ onMounted(() => {
   .yin-card {
     background: url('../assets/yin-card-bg.jpg') no-repeat center center;
     background-size: cover;
-    color: #fff;
+    color: $white;
     font-family: 'Oswald', sans-serif;
     padding: 12px;
     flex-direction: column;
     justify-content: space-between;
 
     .card-header {
-      background-color: #fff;
-      border: solid 2px #2B90AE;
+      background-color: $white;
+      border: solid 2px $lt-blue;
       border-radius: 5px;
       display: flex;
       position: relative;
@@ -70,10 +70,10 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #92B865;
-        border: solid 4px #fff;
+        background: $green;
+        border: solid 4px $white;
         border-radius: 50%;
-        color: #2E4F72;
+        color: $blue;
         font-family: 'Rubik', sans-serif;
         font-size: 1.3rem;
         font-weight: 700;
@@ -86,7 +86,7 @@ onMounted(() => {
       }
 
       h3 {
-        color: #2e4f72;
+        color: $blue;
         flex-basis: 100%;
         font-size: 1.2rem;
         margin: 4px 0;
@@ -99,8 +99,8 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #2E4F72;
-      border: solid 2px #fff;
+      background: $blue;
+      border: solid 2px $white;
       border-radius: 50%;
       float: right;
       height: 20px;
