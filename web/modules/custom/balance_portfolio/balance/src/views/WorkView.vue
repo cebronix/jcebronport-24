@@ -69,6 +69,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+
 .work {
   display: flex;
   flex-direction: column;
@@ -76,16 +77,16 @@ onMounted(() => {
   margin-top: 75px;
 
   h1 {
-    color: #2B90AE;
+    color: $green;
     font-size: 3rem;
-    font-weight: 400;
+    font-weight: 500;
     margin: 0 auto 1rem;
     max-width: 85%;
     text-transform: uppercase;
   }
 
   h2 {
-    color: #92B865;
+    color: $green;
     font-size: 2rem;
     font-weight: 400;
     margin: 1rem auto;
@@ -117,6 +118,14 @@ onMounted(() => {
 
 .category-details {
   width: 85%;
+
+  h1,
+  h2 {
+    color: $green;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
 }
 
 .tiles {
@@ -131,6 +140,7 @@ onMounted(() => {
   flex-basis: 100%;
   flex-direction: column;
   cursor: pointer;
+  height: 400px;
   overflow: hidden;
   position: relative;
 

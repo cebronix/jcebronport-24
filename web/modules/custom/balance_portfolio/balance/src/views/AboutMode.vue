@@ -103,7 +103,7 @@ onMounted(() => {
     backface-visibility: hidden;
     border-radius: 8px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
-    color: #fff;
+    color: $white;
     padding: 1rem;
     position: absolute;
     height: 100%;

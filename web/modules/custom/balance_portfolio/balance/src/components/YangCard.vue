@@ -49,7 +49,7 @@ onMounted(() => {
   .yang-card {
     background: url('../assets/yang-card-bg.jpg') no-repeat center center;
     background-size: cover;
-    color: #fff;
+    color: $white;
     font-family: 'Oswald', sans-serif;
     padding: 12px;
     flex-direction: column;
@@ -63,10 +63,10 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #92B865;
-        border: solid 4px #fff;
+        background: $green;
+        border: solid 4px $white;
         border-radius: 50%;
-        color: #2E4F72;
+        color: $blue;
         font-family: 'Rubik', sans-serif;
         font-size: 2rem;
         font-weight: 700;
@@ -87,8 +87,8 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #2E4F72;
-      border: solid 2px #fff;
+      background: $blue;
+      border: solid 2px $white;
       border-radius: 50%;
       height: 25px;
       width: 25px;
@@ -121,8 +121,8 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #2B90AE;
-        border: solid 4px #fff;
+        background: $lt-blue;
+        border: solid 4px $white;
         border-radius: 50%;
         font-family: 'Rubik', sans-serif;
         font-size: 1.5rem;

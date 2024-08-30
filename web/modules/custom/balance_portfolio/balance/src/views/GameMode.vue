@@ -318,7 +318,7 @@ onUnmounted(() => {
       justify-content: center;
 
       .card-slot {
-        border: solid 5px #666;
+        border: solid 5px $lt-grey;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -366,13 +366,13 @@ onUnmounted(() => {
     }
 
     .card-slot {
-      border: solid 5px #666;
+      border: solid 5px $lt-grey;
       border-right: 0;
       height: 225px;
       width: 150px;
 
       &:last-of-type {
-        border-right: solid 5px #666;
+        border-right: solid 5px $lt-grey;
       }
     }
 
@@ -405,26 +405,26 @@ onUnmounted(() => {
     }
 
     button {
-      background-color: #2B90AE;
+      background-color: $lt-blue;
       border: 0;
       border-radius: 5px;
-      color: #fff;
+      color: $white;
       cursor: pointer;
       margin: 1rem 0 0;
       padding: 0.5rem 1.5rem;
 
       &:hover {
-        background-color: #2E4F72;
+        background-color: $blue;
       }
 
       &:disabled {
-        background-color: #666;
+        background-color: $lt-grey;
         cursor: not-allowed;
       }
     }
 
     .modifier {
-      color: #880000;
+      color: $deep-red;
       font-size: 2.5rem;
       font-weight: 700;
       opacity: 0;
@@ -522,7 +522,7 @@ onUnmounted(() => {
   }
 
   .card {
-    background-color: #fff;
+    background-color: $white;
     border-radius: 8px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
     width: 150px;

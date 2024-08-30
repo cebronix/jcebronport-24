@@ -34,7 +34,6 @@
         <div v-if="cardData.problem"
           class="sub-wrapper problem"
           data-aos="flip-up"
-  
           data-aos-duration="350"
           data-aos-delay="300"
         >
@@ -44,7 +43,6 @@
         <div v-if="cardData.goal"
           class="sub-wrapper goal"
           data-aos="flip-up"
-  
           data-aos-duration="350"
           data-aos-delay="300"
         >
@@ -252,7 +250,14 @@
       <h2>Accessibility</h2>
       <div class="acc-intro" v-html="cardData.accessibility_intro"></div>
       <div class="acc-wrapper">
-        <div class="acc-consideration" v-for="(consideration, index) in cardData.acc_considerations" :key="consideration.id">
+        <div
+          class="acc-consideration"
+          data-aos="flip-up"
+          data-aos-duration="350"
+          data-aos-delay="300"
+          v-for="(consideration, index) in cardData.acc_considerations"
+          :key="consideration.id"
+        >
           <div class="count">{{ index + 1 }}</div>
           <p class="consideration-desc">{{ consideration.consideration }}</p>
         </div>
@@ -267,18 +272,18 @@
       <div class="row two-col__even">
         <div
           class="sub-wrapper"
-          data-aos="fade-up"
+          data-aos="flip-up"
           data-aos-duration="350"
-          data-aos-delay="200"
+          data-aos-delay="300"
         >
           <h3>Impact</h3>
           <div class="impact" v-html="cardData.impact"></div>
         </div>
         <div
           class="sub-wrapper"
-          data-aos="fade-up"
+          data-aos="flip-up"
           data-aos-duration="350"
-          data-aos-delay="200"
+          data-aos-delay="300"
         >
           <h3>What I Learned</h3>
           <div class="lessons" v-html="cardData.what_i_learned"></div>
@@ -365,8 +370,36 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
+
 .case-study {
+  font-family: 'Rubik', sans-serif;
+  line-height: 1.4rem;
   margin-top: 4rem;
+
+  a {
+    color: $green;
+
+    &:hover {
+      color: $lt-blue;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Oswald', sans-serif;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
 }
 
 ul {
@@ -401,7 +434,7 @@ img {
   }
 
   @media screen and (min-width: 768px) {
-    border: solid 2px #92B865;
+    border: solid 2px $green;
     border-radius: 12px;
     margin: 2rem auto 1.25rem;
     max-width: 85%;
@@ -415,6 +448,7 @@ img {
 .section-wrapper {
   display: flex;
   flex-direction: column;
+  background-color: transparent;
   border: 0;
   border-radius: 12px;
   margin: 2rem auto 1.25rem;
@@ -426,7 +460,8 @@ img {
   }
 
   @media screen and (min-width: 768px) {
-    border: solid 2px #92B865;
+    background-color: $black;
+    border: solid 2px $green;
     max-width: 85%;
 
     &.project-overview {
@@ -445,7 +480,8 @@ img {
 }
 
 .sub-wrapper {
-  border: solid 1px #2B90AE;
+  background-color: $black;
+  border: solid 1px $lt-blue;
   border-radius: 10px;
   padding: 0 1rem 1rem;
   margin: 1rem 0;
@@ -466,6 +502,7 @@ img {
   }
 
   &.inline {
+    align-items: flex-end;
     justify-content: flex-start;
     margin-bottom: 8px;
 
@@ -516,9 +553,9 @@ img {
 
 .count,
 .inline-count {
-  background: #92B865;
+  background: $green;
   border-radius: 50%;
-  color: #2E4F72;
+  color: $blue;
   font-size: 1.75rem;
   font-weight: 700;
   height: 45px;
@@ -533,7 +570,7 @@ img {
 }
 
 .inline-count {
-  flex: 0 1 10%;
+  flex: 0 1 auto;
   margin-right: 10px;
   max-width: 45px;
 }
@@ -580,7 +617,7 @@ img {
 }
 
 // .wireframe:not(:empty) {
-//   border-top: solid 1px #2B90AE;
+//   border-top: solid 1px $lt-blue;
 //   padding: 2rem 0 3rem;
 
 //   &:first-of-type {
@@ -592,7 +629,7 @@ img {
 .finding {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 
   .finding-desc {
     flex: 0 1 90%;

@@ -42,7 +42,7 @@ onMounted(() => {
 <style lang="scss">
 .tile-details {
   position: absolute;
-  top: 75%;
+  top: 100%;
   right: 0;
   left: 0;
   bottom: 0;
@@ -75,10 +75,10 @@ onMounted(() => {
 }
 
 button {
-  background-color: #2B90AE;
+  background-color: $lt-blue;
   border: 0;
   border-radius: 5px;
-  color: #fff;
+  color: $white;
   cursor: pointer;
   float: right;
   font-family: 'Oswald', sans-serif !important;
@@ -87,7 +87,7 @@ button {
   text-transform: uppercase !important;
 
   &:hover {
-    background-color: #2E4F72;
+    background-color: $blue;
   }
 }
 </style>

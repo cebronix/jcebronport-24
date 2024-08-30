@@ -64,7 +64,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  border-bottom: solid 1px #2B90AE;
+  border-bottom: solid 1px $lt-blue;
   margin: 4rem 0 2rem;
 
   &:first-of-type {
@@ -76,7 +76,7 @@ const props = defineProps({
   }
 
   img {
-    height: auto;
+    height: min-content;
     width: 100%;
   }
 
@@ -91,20 +91,28 @@ const props = defineProps({
   }
 
   .quote {
-    font-size: 2rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1;
     margin: 0 auto;
     text-align: center;
 
     &::before {
       content: '"';
       font-size: 2.5rem;
-      vertical-align: middle;
+      margin-right: 5px;
+      vertical-align: text-top;
     }
 
     &::after {
       content: '"';
       font-size: 2.5rem;
-      vertical-align: middle;
+      vertical-align: text-top;
+    }
+
+    @media screen and (min-width: 768px) {
+      font-size: 2rem;
     }
   }
 }
