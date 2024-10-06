@@ -1,5 +1,50 @@
 <template>
   <div class="case-study">
+    <vue-particles
+      id="tsparticles"
+      :options="{
+        background: {
+          color: {
+            value: 'transparent'
+          }
+        },
+        particles: {
+          color: {
+            value: '#ffffff'
+          },
+          move: {
+            direction: 'bottom',
+            enable: true,
+            outModes: 'out',
+            speed: 2
+          },
+          number: {
+            density: {
+              enable: true,
+              area: 800
+            },
+            value: 400
+          },
+          opacity: {
+            value: 0.25
+          },
+          shape: {
+            type: 'circle'
+          },
+          size: {
+            value: { min: 1, max: 4 }
+          },
+          wobble: {
+            enable: true,
+            distance: 10,
+            speed: 10
+          },
+          zIndex: {
+            value: { min: 0, max: 100 }
+          }
+        },
+      }"
+    />
     <div
       class="hero"
       :style="{ 'background-image': 'url(/sites/default/files' + cardData.hero + ')' }"
@@ -72,6 +117,7 @@
       </div>
     </div>
     <div
+      v-if="cardData.research_summary"
       class="user-research section-wrapper"
       data-aos="fade-up"
       data-aos-duration="500"
@@ -231,15 +277,19 @@
       data-aos="fade-up"
       data-aos-duration="500"
     >
-      <h3>Design System</h3>
       <div
         class="row two-col__one-three"
         data-aos="fade-up"
         data-aos-duration="350"
         data-aos-delay="200"
       >
-        <div class="system-intro stacked-col" v-html="cardData.design_system_intro"></div>
-        <img :src="'/sites/default/files' + cardData.design_system_image" alt="Design System Image">
+        <div class="stacked-col">
+          <h3>Design System</h3>
+          <div class="system-intro" v-html="cardData.design_system_intro"></div>
+        </div>
+        <div v-if="cardData.design_system_image" class="previews">
+          <img :src="'/sites/default/files' + cardData.design_system_image" alt="Design System Image">
+        </div>
       </div>
     </div>
     <div v-if="cardData.accessibility_intro"
@@ -291,12 +341,19 @@
       </div>
     </div>
   </div>
-  <div class="work-category">
+  <div class="work-category more section-wrapper">
     <div class="category-details">
       <h2>More {{ renameCategories(cardData.category[0].name) }}</h2>
     </div>
-    <div class="tiles">
-      <div v-for="card in relatedCards" :key="card.pid" class="tile-wrapper">
+    <div class="row">
+      <div
+        v-for="card in relatedCards"
+        :key="card.pid"
+        class="tile-wrapper sub-wrapper"
+        data-aos="flip-up"
+        data-aos-duration="350"
+        data-aos-delay="150"
+      >
         <WorkTile :card="card" class="tile" v-if="card.pid !== cardData.pid"/>
       </div>
     </div>
@@ -319,7 +376,7 @@ const caseStudied = () => {
     behavior: 'smooth'
   })
 
-  document.querySelector('nav a[href="#/portfolio"]').classList.add('router-link-active')
+  document.querySelector('nav a[href="#/work"]').classList.add('router-link-active')
 }
 
 
@@ -364,7 +421,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  document.querySelector('nav a[href="#/portfolio"]').classList.remove('router-link-active')
+  document.querySelector('nav a[href="#/work"]').classList.remove('router-link-active')
 })
 
 </script>
@@ -372,9 +429,10 @@ onUnmounted(() => {
 <style lang="scss">
 
 .case-study {
-  font-family: 'Rubik', sans-serif;
-  line-height: 1.4rem;
+  font-family: $primary-font;
+  line-height: 1.2;
   margin-top: 4rem;
+  overflow: hidden;
 
   a {
     color: $green;
@@ -390,15 +448,19 @@ onUnmounted(() => {
   h4,
   h5,
   h6 {
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
   }
 
   h3 {
     font-size: 1.5rem;
+    font-weight: 400;
+    color: $green;
   }
 
   h4 {
     font-size: 1.25rem;
+    font-weight: 400;
+    text-transform: uppercase;
   }
 }
 
@@ -423,7 +485,7 @@ img {
     justify-content: flex-end;
     flex-direction: column;
     background: rgba(0,0,0,0.25);
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 55%);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
     border-radius: 0;
     padding: 2rem;
     position: absolute;
@@ -441,6 +503,7 @@ img {
 
     .hero-inner {
       border-radius: 12px;
+      background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 55%);
     }
   }
 }
@@ -452,8 +515,8 @@ img {
   border: 0;
   border-radius: 12px;
   margin: 2rem auto 1.25rem;
-  max-width: 90%;
-  padding: 1rem 2rem;
+  padding: 1rem;
+  width: 90%;
 
   &.project-overview {
     margin-top: 0;
@@ -463,6 +526,7 @@ img {
     background-color: $black;
     border: solid 2px $green;
     max-width: 85%;
+    padding: 1rem 2rem;
 
     &.project-overview {
       margin-top: 2rem;
@@ -489,6 +553,10 @@ img {
   &:empty {
     display: none;
   }
+
+  p {
+    line-height: 1.4;
+  }
 }
 
 .row {
@@ -502,38 +570,58 @@ img {
   }
 
   &.inline {
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 
     h4 {
       margin: 0 8px 0 0;
+    }
+
+    .inline-col-2 {
+      padding-top: 5px;
     }
   }
 
   &.two-col {
     &__even {
       > * {
-        width: 45%;
+        flex-basis: 44%;
+
+        @media screen and (min-width: 1150px) {
+          flex-basis: 45%;
+        }
+
+        @media screen and (min-width: 1350px) {
+          flex-basis: 46%;
+        }
       }
     }
 
     &__three-one {
       > * {
-        width: 66%;
+        flex-basis: 64%;
 
         &:last-child {
-          width: 24%;
+          flex-basis: 24%;
+
+          @media screen and (min-width: 1150px) {
+            flex-basis: 26%;
+          }
         }
       }
     }
 
     &__one-three {
       > * {
-        width: 28%;
+        flex-basis: 28%;
+
+        @media screen and (min-width: 1150px) {
+          flex-basis: 30%;
+        }
 
         &:last-child {
-          width: 66%;
+          flex-basis: 64%;
         }
       }
     }
@@ -544,7 +632,7 @@ img {
       &__one-three {
         > *,
         > *:last-child {
-          width: 100%;
+          flex: 1 1 100%;
         }
       }
     }
@@ -553,9 +641,10 @@ img {
 
 .count,
 .inline-count {
-  background: $green;
+  background: $lt-blue;
+  border: 2px solid $green;
   border-radius: 50%;
-  color: $blue;
+  color: $white;
   font-size: 1.75rem;
   font-weight: 700;
   height: 45px;
@@ -616,23 +705,22 @@ img {
   }
 }
 
-// .wireframe:not(:empty) {
-//   border-top: solid 1px $lt-blue;
-//   padding: 2rem 0 3rem;
-
-//   &:first-of-type {
-//     border: 0;
-//     padding-top: 1rem;
-//   }
-// }
-
 .finding {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-size: 1.2rem;
 
   .finding-desc {
     flex: 0 1 90%;
+    margin-block-start: 0;
+  }
+}
+
+.work-category {
+  &.more {
+    background: none;
+    border: 0;
+    overflow: hidden;
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="row two-col__one-three">
     <div class="wfpt-info stacked-col">
-      <h4>{{ props.wfpt.title }}</h4>
+      <h3>{{ props.wfpt.title }}</h3>
       <span class="wfpt-intro" v-html="props.wfpt.intro"></span>
       <span v-if="props.wfpt.highlights" class="wfpt-highlights" v-html="props.wfpt.highlights"></span>
       <a v-if="props.wfpt.link_uri" :href="props.wfpt.link_uri">{{ props.wfpt.link_text }}</a>

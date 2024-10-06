@@ -1,14 +1,66 @@
 <template>
   <div class="about-mode" ref="about_mode">
-    <!-- <h2>50th Anniversary of existence</h2>  -->
-    <div v-for="category in aboutDeck" :key="category.id" class="about-cards">
-      <!-- <h3>{{ betterCategory(category[0].category) }}</h3> -->
-      <div v-for="card in category"
-        :key="card.id"
-        class="card-wrapper"
+    <vue-particles
+      id="tsparticles"
+      :options="{
+        background: {
+          color: {
+            value: 'transparent'
+          }
+        },
+        particles: {
+          color: {
+            value: '#ffffff'
+          },
+          move: {
+            direction: 'bottom',
+            enable: true,
+            outModes: 'out',
+            speed: 2
+          },
+          number: {
+            density: {
+              enable: true,
+              area: 800
+            },
+            value: 400
+          },
+          opacity: {
+            value: 0.125
+          },
+          shape: {
+            type: 'circle'
+          },
+          size: {
+            value: { min: 1, max: 4 }
+          },
+          wobble: {
+            enable: true,
+            distance: 10,
+            speed: 10
+          },
+          zIndex: {
+            value: { min: 0, max: 100 }
+          }
+        },
+      }"
+    />
+    <div class="flavor-text">
+      <h1>50th Anniversary of my existence!</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum est id porttitor. Praesent pretium magna magna, non molestie nibh luctus commodo. Curabitur id ligula cursus ante suscipit finibus. Nunc nec dui vel mauris dictum vulputate ornare eu mauris. Etiam ornare ultrices sagittis. Aenean non nulla a mauris venenatis rhoncus. Nam eu finibus enim, et imperdiet nunc.
+      </p>
+    </div>
+    <div v-for="category in aboutDeck" :key="category.id" class="about-category">
+      <h2>{{ betterCategory(category[0].category) }}</h2>
+      <div
+        class="section-wrapper"
+        data-aos="fade-up"
+        data-aos-duration="500"
       >
-        <AboutCard :card="card" class="card about-card" />
-        <div class="facedown"></div>
+        <div class="row two-col__even">
+          <AboutTile v-for="card in category" :key="card.id" :card="card" />
+        </div>
       </div>
     </div>
   </div>
@@ -16,31 +68,43 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import AboutCard from '@/components/AboutCard'
+import AboutTile from '@/components/AboutTile.vue'
 
 const about_mode = ref(null)
-const aboutDeck = ref(window.drupalSettings.aboutDeck)
+let aboutDeck = ref(window.drupalSettings.aboutDeck)
 
-const dealCards = function() {
-  setTimeout(() => {
-    ref(about_mode).value.classList.add('dealt')
-    // const aboutCards = ref(about_mode).value.querySelectorAll('.card-wrapper')
-    // aboutCards.forEach((card) => {
-    //   card.style.transform = 'rotate(' + rotateRandom(35) + 'deg)'
-    // })
-  }, 1500)
+let aboutDeckArray = Object.values(aboutDeck.value)
+let lastCategory = aboutDeckArray.pop()
+aboutDeckArray.unshift(lastCategory)
+
+aboutDeck.value = aboutDeckArray
+
+
+const betterCategory = function(category) {
+  let betterCategory = ''
+  switch (category) {
+    case 'Work Experience':
+      betterCategory = 'Where I\'ve Been'
+      break
+    case 'Education':
+      betterCategory = 'How I\'ve Learned'
+      break
+    case 'Leveled Data':
+      betterCategory = 'What I know'
+      break
+    case 'Plain Text':
+      betterCategory = 'Who I Am'
+      break
+    default:
+      betterCategory = category
+      break
+  }
+
+  return betterCategory
 }
-
-// const rotateRandom = function(max) {
-//   var min = -max
-//   var adjustment = Math.floor(Math.random() * 25)
-//   var degree = Math.floor(Math.random() * (max - min + adjustment)) + min
-//   return degree
-// }
 
 onMounted(() => {
   // console.log(aboutDeck.value)
-  dealCards()
 })
 
 </script>
@@ -48,94 +112,58 @@ onMounted(() => {
 <style scoped lang="scss">
 .about-mode {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6rem;
-  margin-top: 100px;
-  transition: all 0.75s ease-in-out;
+  flex-direction: column;
+  font-family: $primary-font;
+  margin-top: 125px;
+  overflow: hidden;
 
-  &.dealt {
-    display: flex;
-    transition: all 0.75s ease-in-out;
-
-    .about-cards {
-      display: flex;
-      margin-left: 0;
-    }
-
-    .card-wrapper:not(:first-of-type) {
-      margin-left: 0;
-    }
-  }
-}
-
-.about-cards {
-  display: inline-flex;
-  flex-wrap: wrap;
-  flex: 0 1 45%;
-  justify-content: center;
-  margin-left: -155px;
-  transition: all 0.75s ease-in-out;
-
-  &:last-of-type {
-    flex: 0 1 90%;
-  }
-}
-
-.card-wrapper {
-  height: 265px;
-  width: 165px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: all 0.75s ease-in-out;
-
-  &:hover {
-    transform: perspective(400px) rotateY(180deg) !important;
-    z-index: 1;
+  @media screen and (min-width: 768px) {
+    margin-top: 80px;
   }
 
-  &:not(:first-of-type) {
-    margin-left: -155px;
+  h1 {
+    color: $green;
+    font-size: 3rem;
+    font-weight: 500;
+    margin: 0 auto 1rem;
+    max-width: 85%;
+    // text-transform: uppercase;
   }
 
-  .about-card,
-  .facedown {
-    backface-visibility: hidden;
-    border-radius: 8px;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+  h2 {
     color: $white;
-    padding: 1rem;
-    position: absolute;
-    height: 100%;
-    width: 100%;
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 auto;
+    max-width: 85%;
+    // text-transform: uppercase;
 
-    h3 {
-      font-size: 1.1rem;
-      margin: 0;
-      text-align: center;
+    @media screen and (min-width: 768px) {
+      margin: 1rem auto;
     }
   }
 
-  .about-card {
-    background: url('../assets/yin-card-bg.jpg') no-repeat center center;
-    background-size: contain;
-    font-family: 'Oswald', sans-serif;
-    line-height: 1.4;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    overflow: hidden;
-    transform: rotateY(180deg);
-
-    h2 {
-      margin-block-start: 0;
-    }
+  p {
+    font-size: 1.2rem;
+    font-weight: 100;
+    margin: 0 auto 1rem;
+    max-width: 85%;
   }
 
-  .facedown {
-    background: url('../assets/card-back.jpg') no-repeat center center;
-    background-size: contain;
+  .section-wrapper {
+    margin-top: 0;
   }
 }
 
+.about-category {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0 0 4rem;
+  position: relative;
+
+  .tiles {
+    margin-bottom: 4rem;
+  }
+}
 </style>

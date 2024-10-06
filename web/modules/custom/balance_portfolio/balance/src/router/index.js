@@ -20,8 +20,8 @@ const routes = [
     component: AboutMode
   },
   {
-    path: '/portfolio',
-    name: 'portfolio',
+    path: '/work',
+    name: 'work',
     component: WorkView
   },
   // {
@@ -39,7 +39,7 @@ const routes = [
     component: ContactView
   },
   {
-    path: '/portfolio/case-study/:pid',
+    path: '/work/case-study/:pid',
     name: 'case-study',
     component: CaseStudy,
     props: true

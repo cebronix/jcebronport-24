@@ -78,21 +78,21 @@ class BalancePortfolioController extends ControllerBase {
         $category = $this->getTaxonomy($card->get('field_about_card_type')?->referencedEntities());
         switch ($category) {
           case 'Certificates and Awards':
-            $data['edu_certs_random'][] = [
+            $data['edu_certs'][] = [
               'main_title' => $card->getTitle(),
               'category' => $category,
               'certs_awards' => $card->get('field_certificates_and_awards')?->getValue(),
             ];
             break;
           case 'Education':
-            $data['edu_certs_random'][] = [
+            $data['edu_certs'][] = [
               'main_title' => $card->getTitle(),
               'category' => $category,
               'education' => $card->get('field_about_education')?->value,
             ];
             break;
           case 'Plain Text':
-            $data['edu_certs_random'][] = [
+            $data['random'][] = [
               'main_title' => $card->getTitle(),
               'category' => $category,
               'body' => $card->get('field_about_card_body')?->value,
