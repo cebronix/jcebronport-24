@@ -1,13 +1,65 @@
 <template>
   <div class="work">
+    <vue-particles
+      id="tsparticles"
+      :options="{
+        background: {
+          color: {
+            value: 'transparent'
+          }
+        },
+        particles: {
+          color: {
+            value: '#ffffff'
+          },
+          move: {
+            direction: 'bottom',
+            enable: true,
+            outModes: 'out',
+            speed: 2
+          },
+          number: {
+            density: {
+              enable: true,
+              area: 800
+            },
+            value: 400
+          },
+          opacity: {
+            value: 0.125
+          },
+          shape: {
+            type: 'circle'
+          },
+          size: {
+            value: { min: 1, max: 4 }
+          },
+          wobble: {
+            enable: true,
+            distance: 10,
+            speed: 10
+          },
+          zIndex: {
+            value: { min: 0, max: 100 }
+          }
+        },
+      }"
+    />
     <!-- Get these from a config page later -->
     <div class="flavor-text">
-      <h1>My Work</h1>
+      <h1>Things I've Built</h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum est id porttitor. Praesent pretium magna magna, non molestie nibh luctus commodo. Curabitur id ligula cursus ante suscipit finibus. Nunc nec dui vel mauris dictum vulputate ornare eu mauris. Etiam ornare ultrices sagittis. Aenean non nulla a mauris venenatis rhoncus. Nam eu finibus enim, et imperdiet nunc.
       </p>
     </div>
-    <div v-for="category in categories" :key="category.id" class="work-category" :id=category>
+    <div
+      v-for="category in categories"
+      :key="category.id"
+      class="work-category section-wrapper"
+      :id=category
+      data-aos="fade-up"
+      data-aos-duration="500"
+    >
       <div class="category-details">
         <h2>{{ renameCategories(category) }}</h2>
         <!-- Get these from a config page later -->
@@ -15,8 +67,15 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum est id porttitor. Praesent pretium magna magna, non molestie nibh luctus commodo. Curabitur id ligula cursus ante suscipit finibus.
         </p>
       </div>
-      <div class="tiles">
-        <div v-for="card in gameDeck" :key="card.pid" class="tile-wrapper">
+      <div class="row">
+        <div
+          v-for="card in gameDeck"
+          :key="card.pid"
+          class="tile-wrapper sub-wrapper"
+          data-aos="flip-up"
+          data-aos-duration="350"
+          data-aos-delay="150"
+        >
           <WorkTile :card="card" class="tile" v-if="category == card.category[0].name"/>
         </div>
       </div>
@@ -73,8 +132,14 @@ onMounted(() => {
 .work {
   display: flex;
   flex-direction: column;
-  font-family: 'Rubik', sans-serif;
-  margin-top: 75px;
+  font-family: $primary-font;
+  margin-top: 115px;
+  overflow: hidden;
+
+  @media screen and (min-width: 768px) {
+    margin-top: 75px;
+    padding-bottom: 2rem;
+  }
 
   h1 {
     color: $green;
@@ -82,16 +147,16 @@ onMounted(() => {
     font-weight: 500;
     margin: 0 auto 1rem;
     max-width: 85%;
-    text-transform: uppercase;
+    // text-transform: uppercase;
   }
 
   h2 {
     color: $green;
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: 500;
     margin: 1rem auto;
     max-width: 85%;
-    text-transform: uppercase;
+    // text-transform: uppercase;
   }
 
   p {
@@ -100,12 +165,11 @@ onMounted(() => {
     margin: 0 auto 1rem;
     max-width: 85%;
   }
-}
 
-.work-category {
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
+  .section-wrapper {
+    margin-top: 0;
+    margin-bottom: 3rem;
+  }
 }
 
 .flavor-text,
@@ -117,14 +181,27 @@ onMounted(() => {
 }
 
 .category-details {
+  padding-top: 0;
   width: 85%;
 
   h1,
   h2 {
     color: $green;
-    font-family: 'Rubik', sans-serif;
+    font-family: $primary-font;;
     font-weight: 500;
     text-transform: uppercase;
+  }
+}
+
+.work-category {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+
+  &.more {
+    .category-details {
+      padding: 0
+    }
   }
 }
 
@@ -140,12 +217,13 @@ onMounted(() => {
   flex-basis: 100%;
   flex-direction: column;
   cursor: pointer;
-  height: 400px;
+  height: 425px;
   overflow: hidden;
   position: relative;
 
   @media screen and (min-width: 768px) {
-    flex-basis: 50%;
+    flex-basis: 48%;
+    height: 345px;
   }
 
   &:empty {
@@ -161,6 +239,10 @@ onMounted(() => {
         margin: 4px 0 1rem;
       }
     }
+  }
+
+  &.sub-wrapper {
+    padding: 0;
   }
 }
 

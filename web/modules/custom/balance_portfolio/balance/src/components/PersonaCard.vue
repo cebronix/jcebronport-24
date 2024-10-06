@@ -22,23 +22,23 @@
     <div class="row dir-col">
       <div class="row inline" v-if="props.persona.education">
         <h4>Education:</h4>
-        <div class="education">{{ props.persona.education }}</div>
+        <div class="education inline-col-2">{{ props.persona.education }}</div>
       </div>
       <div class="row inline" v-if="props.persona.hometown">
         <h4>Hometown:</h4>
-        <div class="hometown">{{ props.persona.hometown }}</div>
+        <div class="hometown inline-col-2">{{ props.persona.hometown }}</div>
       </div>
       <div class="row inline" v-if="props.persona.family">
         <h4>Family:</h4>
-        <div class="family">{{ props.persona.family }}</div>
+        <div class="family inline-col-2">{{ props.persona.family }}</div>
       </div>
       <div class="row inline" v-if="props.persona.age">
         <h4>Age:</h4>
-        <div class="age">{{ props.persona.age }}</div>
+        <div class="age inline-col-2">{{ props.persona.age }}</div>
       </div>
       <div class="row inline" v-if="props.persona.job">
         <h4>Job:</h4>
-        <div class="job">{{ props.persona.job }}</div>
+        <div class="job inline-col-2">{{ props.persona.job }}</div>
       </div>
     </div>
     <div class="description">
@@ -60,6 +60,7 @@ const props = defineProps({
 .personas-wrapper {
   padding: 0 2rem !important;
 }
+
 .persona {
   display: flex;
   flex-direction: column;
@@ -90,8 +91,13 @@ const props = defineProps({
     }
   }
 
+  .education {
+    padding-top: 5px;
+    width: 60%;
+  }
+
   .quote {
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     font-size: 1.5rem;
     font-style: italic;
     line-height: 1;

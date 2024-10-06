@@ -145,7 +145,7 @@ onMounted(() => {
   .collection-card {
     background: url('../assets/yang-card-bg.jpg') no-repeat center center;
     background-size: contain;
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     line-height: 1.4;
     display: flex;
     flex-direction: column;
@@ -159,7 +159,7 @@ onMounted(() => {
   }
 
   .facedown {
-    background: url('../assets/card-back.jpg') no-repeat center center;
+    background: url('../assets/card-back-b.jpg') no-repeat center center;
     background-size: contain;
   }
 }

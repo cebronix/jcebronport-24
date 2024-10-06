@@ -2,9 +2,9 @@
   <div class="intro">
     <div class="row">Hi! My name is <h1> Joseph Cook.</h1> </div>
     <div class="row"> I'm a <h2> Software Engineer</h2> and <h2> UX Designer???</h2></div>
-    <div class="row">
+    <!-- <div class="row">
       <h3>I like both.</h3>
-    </div>
+    </div> -->
     <!-- <div class="row">
       <h3> Great Divide be Damned.</h3>
     </div> -->
@@ -13,11 +13,11 @@
     </div>
   </div>
   <div class="splash-deck" ref="splash_deck">
-    <SplashCard v-for="card in splashDeck" :card = "card" :key="card.id"/>
+    <SplashCard v-for="(card, index) in splashDeck" :card = "card" :index = "index" :key="card.id"/>
   </div>
   <div class="learn-more">
     <router-link :to="{ name: 'about' }" class="button">Learn More</router-link>
-    <router-link :to="{ name: 'portfolio' }" class="button">My Work</router-link>
+    <router-link :to="{ name: 'work' }" class="button">My Work</router-link>
   </div>
 </template>
 
@@ -32,29 +32,34 @@ const dealCards = function() {
     ref(splash_deck).value.classList.add('dealt')
     const splashCards = ref(splash_deck).value.querySelectorAll('.card-wrapper')
     splashCards.forEach((card) => {
-      card.style.transform = 'rotate(' + rotateRandom(25) + 'deg)'
+      card.style.transform = 'rotate(' + rotateRandom(20) + 'deg)'
     })
   }, 1500)
 }
 
 const rotateRandom = function(max) {
   var min = -max
-  var adjustment = Math.floor(Math.random() * 25)
+  var adjustment = Math.floor(Math.random() * 20)
   var degree = Math.floor(Math.random() * (max - min + adjustment)) + min
   return degree
 }
 
 // Move these to a config page.
 const splashDeck = [
+  // {
+  //   id: 6,
+  //   content: 'What\'s next? - UX Engineer? Full Stack Developer?',
+  //   image: 'yin-card-bg.jpg'
+  // }
   {
-    id: 1,
-    content: 'Web-focused graphic designer - Everything Adobe, HTML, CSS & a whole lotta tables',
-    image: 'strut'
+    id: 5,
+    content: 'Software Engineer & UX Designer - Drupal, Laravel, Vue, SCSS, XD, Figma',
+    image: 'wtf'
   },
   {
-    id: 2,
-    content: 'Interaction designer - Sites, Flash animations & games. So much Flash.',
-    image: 'run'
+    id: 4,
+    content: 'Web Designer & Devloper - PHP, CSS, WordPress, JavaScript, jQuery',
+    image: 'crash'
   },
   {
     id: 3,
@@ -62,20 +67,15 @@ const splashDeck = [
     image: 'trip'
   },
   {
-    id: 4,
-    content: 'Web Designer & Devloper - PHP, CSS, WordPress, JavaScript, jQuery',
-    image: 'flip'
+    id: 2,
+    content: 'Interaction designer - Sites, Flash animations & games. So much Flash.',
+    image: 'run'
   },
   {
-    id: 5,
-    content: 'Software Engineer & UX Designer - Drupal, Laravel, Vue, SCSS, XD, Figma',
-    image: 'wtf'
-  },
-  // {
-  //   id: 6,
-  //   content: 'What\'s next? - UX Engineer? Full Stack Developer?',
-  //   image: 'yin-card-bg.jpg'
-  // }
+    id: 1,
+    content: 'Web-focused graphic designer - Everything Adobe, HTML, CSS & a whole lotta tables',
+    image: 'strut'
+  }
 ]
 
 onMounted(() => {
@@ -85,15 +85,23 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+  .spalsh-intro {
+    overflow: hidden;
+  }
+
   .intro {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     font-size: 2rem;
-    margin: 0 auto;
+    margin: 1rem auto 0;
     padding: 4rem 0 2rem;
     width: 85%;
+
+    @media screen and (min-width: 768px) {
+      margin-top: 4rem;
+    }
 
     .row {
       align-items: center;
@@ -103,6 +111,10 @@ onMounted(() => {
       margin: 0 auto;
       max-width: 900px;
       width: 100%;
+
+      &:first-of-type {
+        justify-content: center;
+      }
 
       &:nth-child(even) {
         padding-left: 3rem;
@@ -124,7 +136,7 @@ onMounted(() => {
   h3,
   h4 {
     color: $lt-blue;
-    font-family: 'Rubik', sans-serif;
+    font-family: $primary-font;
     font-weight: 400;
     margin: 0;
   }
@@ -139,37 +151,44 @@ onMounted(() => {
 
   h3 {
     color: $green;
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     font-size: 2.5rem;
     text-transform: uppercase;
   }
 
   h4 {
     color: $white;
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     font-size: 2rem;
   }
 
   .splash-deck {
     display: flex;
+    flex-direction: row-reverse;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 0 auto;
-    transition: all 0.75s ease-in-out;
-    width: 30%;
+    margin: 1rem auto;
+    transition: all 0.1s ease-in-out;
+    width: 95%;
 
     .card-wrapper {
-      &:not(:first-of-type) {
-        margin-left: -170px;
+      pointer-events: none;
+      &:not(:last-of-type) {
+        margin-left: -160px;
       }
     }
 
     &.dealt {
       transition: all 0.75s ease-in-out;
-      width: 95%;
+      width: 65%;
+
+      @media screen and (min-width: 768px) {
+        width: 95%;
+      }
 
       .card-wrapper {
         margin-left: -10%;
+        pointer-events: all;
 
         @media screen and (min-width: 768px) {
           margin-left: -5%;
@@ -197,7 +216,7 @@ onMounted(() => {
     border-radius: 5px;
     color: $white;
     cursor: pointer;
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     font-weight: 400;
     text-decoration: none;
     text-transform: uppercase;

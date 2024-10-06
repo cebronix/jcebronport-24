@@ -313,7 +313,7 @@ onUnmounted(() => {
     .discard-pile {
       align-items: center;
       color: rgba(255, 255, 255, 0.75);
-      font-family: 'Oswald', sans-serif;
+      font-family: $secondary-font;
       font-weight: 600;
       justify-content: center;
 
@@ -543,7 +543,7 @@ onUnmounted(() => {
     }
 
     &.facedown {
-      background: url('../assets/card-back.jpg') no-repeat center center;
+      background: url('../assets/card-back-b.jpg') no-repeat center center;
       background-size: contain;
 
       &.opp {

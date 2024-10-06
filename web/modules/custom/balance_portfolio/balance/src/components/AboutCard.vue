@@ -50,6 +50,10 @@ onMounted(() => {
   height: 90%;
   width: auto;
 
+  &.rusty {
+    // background-image: url('../assets/trip.png');
+  }
+
   &.beginner {
     // background-image: url('../assets/strut.png');
   }
@@ -58,11 +62,7 @@ onMounted(() => {
     // background-image: url('../assets/run.png');
   }
 
-  &.advanced {
-    // background-image: url('../assets/trip.png');
-  }
-
-  &.rusty {
+  &.proficient {
     // background-image: url('../assets/trip.png');
   }
 }

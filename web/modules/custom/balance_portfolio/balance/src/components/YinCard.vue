@@ -53,7 +53,7 @@ onMounted(() => {
     background: url('../assets/yin-card-bg.jpg') no-repeat center center;
     background-size: cover;
     color: $white;
-    font-family: 'Oswald', sans-serif;
+    font-family: $secondary-font;
     padding: 12px;
     flex-direction: column;
     justify-content: space-between;
@@ -74,7 +74,7 @@ onMounted(() => {
         border: solid 4px $white;
         border-radius: 50%;
         color: $blue;
-        font-family: 'Rubik', sans-serif;
+        font-family: $primary-font;
         font-size: 1.3rem;
         font-weight: 700;
         height: 30px;
