@@ -1,10 +1,9 @@
 <template>
   <div class="row two-col__one-three">
-    <div class="row">
+    <div>
       <img v-if="props.persona.photo" :src="'/sites/default/files/' + props.persona.photo" :alt="props.persona.name + ' photo'" class="persona-photo">
-      <h4>{{ props.persona.name }}</h4>
     </div>
-    <div class="row">
+    <div>
       <div v-if="props.persona.quote" class="quote">{{ props.persona.quote }}</div>
       <div class="row two-col__even">
         <div v-if="props.persona.goals">
@@ -42,6 +41,7 @@
       </div>
     </div>
     <div class="description">
+      <h4>{{ props.persona.name }}</h4>
       <div v-if="props.persona.description" v-html="props.persona.description"></div>
     </div>
   </div>
@@ -65,8 +65,9 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  border-bottom: solid 1px $lt-blue;
+  border-bottom: solid 1px $gold;
   margin: 4rem 0 2rem;
+  padding-bottom: 1rem;
 
   &:first-of-type {
     margin-top: 1rem;
@@ -78,14 +79,15 @@ const props = defineProps({
 
   img {
     height: min-content;
+    max-width: 300px;
     width: 100%;
   }
 
-  .row {
-    margin-bottom: 1rem;
-  }
-
   .description {
+    h4 {
+      margin-top: 0;
+    }
+
     p {
       margin: 0 0 1rem;
     }
@@ -93,7 +95,6 @@ const props = defineProps({
 
   .education {
     padding-top: 5px;
-    width: 60%;
   }
 
   .quote {

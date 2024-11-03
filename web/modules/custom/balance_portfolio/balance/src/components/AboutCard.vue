@@ -49,21 +49,5 @@ onMounted(() => {
   background-repeat: no-repeat;
   height: 90%;
   width: auto;
-
-  &.rusty {
-    // background-image: url('../assets/trip.png');
-  }
-
-  &.beginner {
-    // background-image: url('../assets/strut.png');
-  }
-
-  &.intermediate {
-    // background-image: url('../assets/run.png');
-  }
-
-  &.proficient {
-    // background-image: url('../assets/trip.png');
-  }
 }
 </style>

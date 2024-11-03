@@ -1,11 +1,14 @@
 <template>
-  <div class="tile-details" @click="loadCaseStudy(props.card.pid)">
+  <div
+    class="tile-details"
+    @click="loadCaseStudy(props.card.pid)"
+  >
     <h3>{{ props.card.title }}</h3>
     <h4>{{ props.card.subtitle }}</h4>
     <span v-html="trimText(props.card.problem)" class="tile-problem"></span>
     <button>Details</button>
   </div>
-  <img :src="`/sites/default/files/${props.card.preview_image}`" />
+  <div class="tile-bg" :style='{ "background-image": "url(/sites/default/files/" + encodeURI(props.card.preview_image) +")" }'></div>
 </template>
 
 <script setup>
@@ -82,11 +85,19 @@ onMounted(() => {
   }
 }
 
+.tile-bg {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
 button {
-  background-color: $lt-blue;
+  background-color: $green;
   border: 0;
   border-radius: 5px;
-  color: $white;
+  color: $black;
   cursor: pointer;
   float: right;
   font-family: $secondary-font !important;
@@ -95,7 +106,7 @@ button {
   text-transform: uppercase !important;
 
   &:hover {
-    background-color: $blue;
+    background-color: $gold;
   }
 }
 </style>

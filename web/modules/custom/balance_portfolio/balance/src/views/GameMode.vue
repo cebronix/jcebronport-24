@@ -405,7 +405,7 @@ onUnmounted(() => {
     }
 
     button {
-      background-color: $lt-blue;
+      background-color: $green;
       border: 0;
       border-radius: 5px;
       color: $white;
@@ -414,7 +414,7 @@ onUnmounted(() => {
       padding: 0.5rem 1.5rem;
 
       &:hover {
-        background-color: $blue;
+        background-color: $gold;
       }
 
       &:disabled {
