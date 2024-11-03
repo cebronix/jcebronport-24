@@ -4,7 +4,7 @@
       <h3>{{ props.wfpt.title }}</h3>
       <span class="wfpt-intro" v-html="props.wfpt.intro"></span>
       <span v-if="props.wfpt.highlights" class="wfpt-highlights" v-html="props.wfpt.highlights"></span>
-      <a v-if="props.wfpt.link_uri" :href="props.wfpt.link_uri">{{ props.wfpt.link_text }}</a>
+      <a v-if="props.wfpt.link_uri" :href="props.wfpt.link_uri" target="_blank">{{ props.wfpt.link_text }}</a>
     </div>
     <div v-if="props.wfpt.images" class="previews">
       <img v-for="preview in props.wfpt.images" :src="'/sites/default/files/' + preview" :key="preview.id" alt="" />

@@ -46,9 +46,9 @@
       }"
     />
     <div class="flavor-text">
-      <h1>50th Anniversary of my existence!</h1>
+      <h1>Celebrating the 50th Anniversary of my existence!</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum est id porttitor. Praesent pretium magna magna, non molestie nibh luctus commodo. Curabitur id ligula cursus ante suscipit finibus. Nunc nec dui vel mauris dictum vulputate ornare eu mauris. Etiam ornare ultrices sagittis. Aenean non nulla a mauris venenatis rhoncus. Nam eu finibus enim, et imperdiet nunc.
+        Development and Design. I like both. Particularly when I can be the bridge between the two disciplines. I'm a fan of balance in all things. Including balancing the problem solving of development with the pure creation of design (and illustration). That balance keeps me from getting burned out. It keeps me sane...ish.
       </p>
     </div>
     <div v-for="category in aboutDeck" :key="category.id" class="about-category">
@@ -131,7 +131,7 @@ onMounted(() => {
   }
 
   h2 {
-    color: $white;
+    color: $gold;
     font-size: 2rem;
     font-weight: 500;
     margin: 0 auto;

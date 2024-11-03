@@ -121,7 +121,7 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: $lt-blue;
+        background: $gold;
         border: solid 4px $white;
         border-radius: 50%;
         font-family: $primary-font;

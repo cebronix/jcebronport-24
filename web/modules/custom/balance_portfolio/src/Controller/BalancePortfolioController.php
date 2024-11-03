@@ -119,6 +119,16 @@ class BalancePortfolioController extends ControllerBase {
             break;
         }
       }
+
+      $new_order = ['edu_certs', 'Work Experience', 'Leveled Data', 'random'];
+      $sorted_data = [];
+      foreach ($new_order as $key) {
+        if (isset($data[$key])) {
+          $sorted_data[$key] = $data[$key];
+        }
+      }
+      $data = $sorted_data;
+
       return $data;
     }
   }

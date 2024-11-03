@@ -438,7 +438,7 @@ onUnmounted(() => {
     color: $green;
 
     &:hover {
-      color: $lt-blue;
+      color: $gold;
     }
   }
 
@@ -449,6 +449,10 @@ onUnmounted(() => {
   h5,
   h6 {
     font-family: $secondary-font;
+  }
+
+  h2 {
+    color: $gold;
   }
 
   h3 {
@@ -473,12 +477,15 @@ img {
 }
 
 .hero {
-  position: relative;
-  min-height: 350px;
   border-radius: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   margin: 0;
+  min-height: 350px;
   max-width: 100%;
   padding: 1rem 2rem;
+  position: relative;
 
   .hero-inner {
     display: flex;
@@ -493,6 +500,10 @@ img {
     right: 0;
     bottom: 0;
     left: 0;
+
+    h1 {
+      margin: 0.5rem 0;
+    }
   }
 
   @media screen and (min-width: 768px) {
@@ -545,7 +556,7 @@ img {
 
 .sub-wrapper {
   background-color: $black;
-  border: solid 1px $lt-blue;
+  border: solid 1px $gold;
   border-radius: 10px;
   padding: 0 1rem 1rem;
   margin: 1rem 0;
@@ -641,10 +652,10 @@ img {
 
 .count,
 .inline-count {
-  background: $lt-blue;
-  border: 2px solid $green;
+  background: $green;
+  border: 2px solid $gold;
   border-radius: 50%;
-  color: $white;
+  color: $black;
   font-size: 1.75rem;
   font-weight: 700;
   height: 45px;
@@ -709,10 +720,12 @@ img {
   display: flex;
   align-items: flex-start;
   font-size: 1.2rem;
+  margin-bottom: 1rem;
 
   .finding-desc {
     flex: 0 1 90%;
     margin-block-start: 0;
+    margin-block-end: 0;
   }
 }
 

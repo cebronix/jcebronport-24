@@ -186,7 +186,7 @@ onMounted(() => {
 
   h1,
   h2 {
-    color: $green;
+    color: $gold;
     font-family: $primary-font;;
     font-weight: 500;
     text-transform: uppercase;

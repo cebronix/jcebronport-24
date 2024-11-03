@@ -1,15 +1,12 @@
 <template>
   <div class="intro">
     <div class="row">Hi! My name is <h1> Joseph Cook.</h1> </div>
-    <div class="row"> I'm a <h2> Software Engineer</h2> and <h2> UX Designer???</h2></div>
+    <div class="row">I'm a <h2> Software Developer</h2> and <h2> UX Engineer</h2></div>
     <!-- <div class="row">
-      <h3>I like both.</h3>
-    </div> -->
-    <!-- <div class="row">
-      <h3> Great Divide be Damned.</h3>
+      <h3>Occassionaly I draw things.</h3>
     </div> -->
     <div class="row">
-      <h4> Here's how that happened:</h4>
+      <h4>Here's the hand I've been playing</h4>
     </div>
   </div>
   <div class="splash-deck" ref="splash_deck">
@@ -46,34 +43,29 @@ const rotateRandom = function(max) {
 
 // Move these to a config page.
 const splashDeck = [
-  // {
-  //   id: 6,
-  //   content: 'What\'s next? - UX Engineer? Full Stack Developer?',
-  //   image: 'yin-card-bg.jpg'
-  // }
   {
     id: 5,
-    content: 'Software Engineer & UX Designer - Drupal, Laravel, Vue, SCSS, XD, Figma',
+    content: 'Dev & UX, Drupal, Laravel, Vue, React, SCSS, XD, Figma',
     image: 'wtf'
   },
   {
     id: 4,
-    content: 'Web Designer & Devloper - PHP, CSS, WordPress, JavaScript, jQuery',
+    content: 'Dev & design, Affinity Suite, PHP, CSS, WordPress, JavaScript, jQuery',
     image: 'crash'
   },
   {
     id: 3,
-    content: 'Sign designer, sales & production with a splash of software & web-guy',
+    content: 'Sign design, sales & production with a splash of web dev',
     image: 'trip'
   },
   {
     id: 2,
-    content: 'Interaction designer - Sites, Flash animations & games. So much Flash.',
+    content: 'Interactive websites, Flash animations & games',
     image: 'run'
   },
   {
     id: 1,
-    content: 'Web-focused graphic designer - Everything Adobe, HTML, CSS & a whole lotta tables',
+    content: 'Web & Graphic design, Adobe Creative Suite, HTML & CSS',
     image: 'strut'
   }
 ]
@@ -96,7 +88,7 @@ onMounted(() => {
     font-family: $secondary-font;
     font-size: 2rem;
     margin: 1rem auto 0;
-    padding: 4rem 0 2rem;
+    padding: 4rem 0 2rem 3rem;
     width: 85%;
 
     @media screen and (min-width: 768px) {
@@ -108,26 +100,10 @@ onMounted(() => {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
+      justify-content: center;
       margin: 0 auto;
       max-width: 900px;
       width: 100%;
-
-      &:first-of-type {
-        justify-content: center;
-      }
-
-      &:nth-child(even) {
-        padding-left: 3rem;
-      }
-
-      &:nth-child(3) {
-        justify-content: flex-end;
-        padding-right: 4rem;
-      }
-
-      &:last-of-type {
-        justify-content: center;
-      }
     }
   }
 
@@ -135,7 +111,7 @@ onMounted(() => {
   h2,
   h3,
   h4 {
-    color: $lt-blue;
+    color: $gold;
     font-family: $primary-font;
     font-weight: 400;
     margin: 0;
@@ -146,14 +122,14 @@ onMounted(() => {
   }
 
   h2 {
+    color: $green;
     font-size: 3rem;
   }
 
   h3 {
-    color: $green;
-    font-family: $secondary-font;
+    color: $gold;
+    font-family: $primary-font;
     font-size: 2.5rem;
-    text-transform: uppercase;
   }
 
   h4 {
@@ -211,10 +187,10 @@ onMounted(() => {
   }
 
   .button {
-    background-color: $lt-blue;
+    background-color: $green;
     border: 0;
     border-radius: 5px;
-    color: $white;
+    color: $black;
     cursor: pointer;
     font-family: $secondary-font;
     font-weight: 400;
@@ -224,7 +200,7 @@ onMounted(() => {
     padding: 0.5rem 1rem;
 
     &:hover {
-      background-color: $blue;
+      background-color: $gold;
     }
   }
 

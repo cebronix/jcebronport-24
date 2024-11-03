@@ -49,13 +49,17 @@
     <div class="section-wrapper">
       <div class="row social">
         <a href="https://www.linkedin.com/in/jcebroncook" target="_blank" class="icon linkedin"></a>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum est id porttitor. Praesent pretium magna magna, non molestie nibh luctus commodo. Curabitur id ligula cursus ante suscipit finibus.</p>
+        <p>I'm not much for social media but you can find me on LinkedIn and my new personal favorite, BlueSky.<br>
+          <!-- <br>One for professional contacts, one not so much. Dev on one side, art on the other? Contact me on whichever is more appropriate for the topic. -->
+        </p>
         <a href="https://bsky.app/profile/cebronix.bsky.social" target="_blank" class="icon bluesky"></a>
       </div>
       <div class="row">
         <div class="sub-wrapper agency">
           <a href="https://viagiotech.com" target="_blank" class="agency-logo"></a>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum est id porttitor. Praesent pretium magna magna, non molestie nibh luctus commodo. Curabitur id ligula cursus ante suscipit finibus.</p>
+          <p>My development services are tied to my employer Viagio Technologies. If you're looking for a team of developers for a custom software or web project, we're your team. Hit up the site for proper channels. If it's not development related, hit me up on BlueSky.<br>
+            <!-- <br>If you're looking for a designer or have illustration/cartoon/book cover projects, I'm your guy. I mean, I would be if I had actual time for freelance work. I'm always open to a conversation, but guarantee nothing. -->
+          </p>
         </div>
       </div>
     </div>
@@ -72,6 +76,8 @@
   flex-direction: column;
   color: white;
   font-family: $primary-font;
+  font-size: 1.2rem;
+  line-height: 1.2;
   margin: 6rem 1rem 4rem;
   text-align: center;
 
@@ -118,10 +124,20 @@
 
     .bluesky {
       background: url('../assets/bluesky.svg') no-repeat center center;
+      transition: scale 0.3s;
+
+      &:hover {
+        scale: 1.1;
+      }
     }
 
     .linkedin {
       background: url('../assets/linkedin.svg') no-repeat center center;
+      transition: scale 0.3s;
+
+      &:hover {
+        scale: 1.1;
+      }
     }
   }
 
@@ -139,15 +155,20 @@
     }
 
     .agency-logo {
-      background: url('../assets/viagiotech-logo.png') no-repeat center center;
+      background: url('../assets/ViagioTech.svg') no-repeat center center;
       background-size: contain;
       content: '';
       height: 70px;
       width: 200px;
+      transition: scale 0.3s;
 
       @media screen and (min-width: 768px) {
         height: 100%;
         width: 100%;
+      }
+
+      &:hover {
+        scale: 1.05;
       }
     }
   }

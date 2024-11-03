@@ -53,14 +53,19 @@
     data-aos-duration="350"
     data-aos-delay="300"
   >
-    <h3>{{ props.card.leveled_data.title }}</h3>
-    <h4>{{ props.card.leveled_data.level }}</h4>
-    <div class="level-bar">
-      <div class="segment"></div>
-      <div class="segment"></div>
-      <div class="segment"></div>
+    <div class="row">
+      <h3>{{ props.card.leveled_data.title }}</h3>
+      <h4>{{ props.card.leveled_data.level }}</h4>
     </div>
-    <div class="level-indicator" :class=props.card.leveled_data.level.toLowerCase()></div>
+    <div class="row">
+      <!-- This is so boring. Animate the slider? Change to an illustration? Can I sort them?  -->
+      <div class="level-bar">
+        <div class="segment"></div>
+        <div class="segment"></div>
+        <div class="segment"></div>
+      </div>
+      <div class="level-indicator" :class=props.card.leveled_data.level.toLowerCase()></div>
+    </div>
   </div>
 </template>
 
@@ -73,7 +78,7 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  console.log(props.card)
+  // console.log(props.card)
 })
 
 </script>
@@ -111,6 +116,10 @@ onMounted(() => {
   }
 
   &.work-cat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     h3 {
       color: $white;
       margin-bottom: 1rem;
@@ -132,30 +141,41 @@ onMounted(() => {
     margin: 2rem 0;
   }
 
+  &.leveled-cat {
+    .row {
+      align-items: flex-end;
+    }
+
+    h3,
+    h4 {
+      margin: 0.75rem 0 0;
+    }
+  }
+
   .level-bar {
-    background-color: $lt-blue;
-    border: 2px solid white;
+    background-color: $black;
+    border: 2px solid $gold;
     border-radius: 10px;
     display: flex;
     margin-top: 2rem;
-    padding: 2px 0;
     width: 100%;
 
     .segment {
-      border-right: 2px solid white;
-      height: 2px;
+      border-right: 2px solid $gold;
+      height: 5px;
       width: 25%;
     }
   }
 
   .level-indicator {
     background-color: $green;
-    border: solid 2px #fff;
+    border: 2px solid $black;
     border-radius: 50%;
-    height: 1rem;
-    width: 1rem;
-    margin-top: -.9rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-top: -1rem;
     position: relative;
+    transition: all 0.5s ease-in-out;
     z-index: 2;
 
     &.beginner {
@@ -171,7 +191,7 @@ onMounted(() => {
     }
 
     &.expert {
-      margin-left: 99%;
+      margin-left: 94.5%;
     }
   }
 }

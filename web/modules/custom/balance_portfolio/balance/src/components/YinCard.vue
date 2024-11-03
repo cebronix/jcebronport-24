@@ -60,7 +60,7 @@ onMounted(() => {
 
     .card-header {
       background-color: $white;
-      border: solid 2px $lt-blue;
+      border: solid 2px $gold;
       border-radius: 5px;
       display: flex;
       position: relative;

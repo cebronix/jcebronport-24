@@ -1,4 +1,5 @@
 <template>
+  <!-- This is also boring. Animate the numbers? Change to a chart? -->
   <div class="divisions">
     <div v-for="div in props.dow" :key="div.id" class="division">
       <span class="percent">{{ div.percentage }}%</span>
